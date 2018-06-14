@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>Scraping Liberty Times Net</title>
+        <title>Isomap Dimensionality Reduction</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://shaynemei.github.io/hackore/theme/css/main.css" />
         <link href="https://shaynemei.github.io/hackore/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Full Atom Feed" />
-        <link href="https://shaynemei.github.io/hackore/feeds/project-code.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Categories Atom Feed" />
+        <link href="https://shaynemei.github.io/hackore/feeds/notes.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Categories Atom Feed" />
 </head>
 <body>
 
@@ -21,8 +21,8 @@
                     <ul class="main-nav-list">
                         <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/" class="pure-menu-link">Hackore</a></li>
 
-                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/category/notes.html" class="pure-menu-link">Notes</a></li>
-                        <li class="main-nav-item active"><a href="https://shaynemei.github.io/hackore/category/project-code.html" class="pure-menu-link">Project Code</a></li>
+                        <li class="main-nav-item active"><a href="https://shaynemei.github.io/hackore/category/notes.html" class="pure-menu-link">Notes</a></li>
+                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/category/project-code.html" class="pure-menu-link">Project Code</a></li>
                     </ul>
                 </div>
              </div>
@@ -37,10 +37,10 @@
     <div class="entry-content">
         <div class="post-meta pure-g">
             <div class="pure-u-3-4 meta-data">
-                <a href="https://shaynemei.github.io/hackore/category/project-code.html" class="category">Project Code</a><br />
+                <a href="https://shaynemei.github.io/hackore/category/notes.html" class="category">Notes</a><br />
 
                 <a class="author" href="https://shaynemei.github.io/hackore/author/shayne.html">Shayne</a>
-                &mdash; <abbr title="2018-06-14T15:30:00+08:00">Thu 14 June 2018</abbr>
+                &mdash; <abbr title="2018-06-14T16:20:00+08:00">Thu 14 June 2018</abbr>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 
             <div class="background-image-small">
                 <div class="title-container">
-                    <h1>Scraping Liberty Times Net</h1>
+                    <h1>Isomap Dimensionality Reduction</h1>
                 </div>
             </div>
         </div>
@@ -1033,8 +1033,16 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Web-Scraping">Web Scraping<a class="anchor-link" href="#Web-Scraping">¶</a></h2><p>This is the python web scraping code I've written to collect corpora for a translation project.<br/>
-Disclaimer: the results are for non-profit student research only.</p>
+<h2 id="Isomap-Dimensionality-Reduction">Isomap Dimensionality Reduction<a class="anchor-link" href="#Isomap-Dimensionality-Reduction">¶</a></h2><p>An unsupervised learning technique that reduces the dimensionality of your datasets.<br/>
+For datasets with <strong>non-linear</strong> related features.<br/>
+Goal:  Uncovers the intrinsic, geometric-nature of your dataset.</p>
+<p><em>under the hood: calculates the distance of each sample to every other sample based on features and then only keeps the k-nearest samples per sample to include in the nearest-neighborhood samples list. Each sample only knows its K-nearest neighbors and how to get to them. A neighborhood graph is then constructed by linking each sample to its K-nearest neighbors. The result is similar to a map of roads in order to move from one point to other K-nearest points to eventually arrive at a destination.</em></p>
+<ul>
+<li>be sure to use <strong>feature scaling</strong> (SciKit-Learn's StandardScaler is a good-fit for taking care of  scaling your data before performing dimensionality reduction.)</li>
+<li>irreversible, unidirectional transformation (not able to <code>.inverse_transform()</code> projected data back into the original feature space</li>
+<li>slower than PCA</li>
+<li>a bit more sensitive to noise than PCA</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1043,75 +1051,17 @@ Disclaimer: the results are for non-profit student research only.</p>
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define a helper function to remove all occurences of a certain value from a list</span>
-<span class="k">def</span> <span class="nf">remove_values_from_list</span><span class="p">(</span><span class="n">the_list</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-   <span class="k">return</span> <span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">the_list</span> <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">val</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>First loop through n pages and get all the links to every article.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the links to every article up to page n</span>
-<span class="k">def</span> <span class="nf">getLinks</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    
-    <span class="c1"># Start at page 1</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s1">'http://iservice.ltn.com.tw/Service/english/index.php?page=1'</span>
-    
-    <span class="c1"># Main list with all links to return</span>
-    <span class="n">links_all</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="c1"># Loop through pages till page n</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'div'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'content_english'</span><span class="p">)</span>
-        
-        <span class="c1"># Select links and store them in a list</span>
-        <span class="n">links_res</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span>
-        <span class="n">links_temp</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">links_res</span><span class="p">:</span> 
-            <span class="n">links_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">'href'</span><span class="p">])</span>
-        <span class="k">del</span> <span class="n">links_temp</span><span class="p">[</span><span class="mi">10</span><span class="p">:]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">manifold</span>
 
-        <span class="c1"># Concat proper full url</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links_temp</span><span class="p">):</span>
-            <span class="n">links_temp</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'http://iservice.ltn.com.tw/Service/english/'</span> <span class="o">+</span> <span class="n">val</span>
-        
-        <span class="c1"># Append to main list</span>
-        <span class="n">links_all</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">links_temp</span><span class="p">)</span>
-        
-        <span class="c1"># Update path to next page</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span>
-        
-    <span class="k">return</span> <span class="n">links_all</span>
+<span class="c1"># Create Isomap instance</span>
+<span class="n">iso</span> <span class="o">=</span> <span class="n">manifold</span><span class="o">.</span><span class="n">Isomap</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># One-liner for the following three lines</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">iso</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># iso.fit(df)</span>
+<span class="c1"># Isomap(eigen_solver='auto', max_iter=None, n_components=2, n_neighbors=4, neighbors_algorithm='auto', path_method='auto', tol=0)</span>
+<span class="c1"># T = iso.transform(df)</span>
 </pre></div>
 </div>
 </div>
@@ -1121,115 +1071,10 @@ Disclaimer: the results are for non-profit student research only.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For each link, extract the article and separate the English part and the Chinese part.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get all information we want from an article</span>
-<span class="k">def</span> <span class="nf">extractContent</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
-
-    <span class="c1"># Get title</span>
-    <span class="k">try</span><span class="p">:</span> 
-        <span class="n">title</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'h2'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'title'</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[</span><span class="mi">9</span><span class="p">:]</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="s1">'null'</span>
-    
-    <span class="c1"># Append all content into a list</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">content_raw</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">'newsContent'</span><span class="p">)</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">content_raw</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'p'</span><span class="p">)</span>
-        <span class="n">article</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
-            <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\r\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
-            <span class="n">article</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">article</span> <span class="o">=</span> <span class="n">remove_values_from_list</span><span class="p">(</span><span class="n">article</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
-
-        <span class="c1"># Get name of translator</span>
-        <span class="n">translator</span> <span class="o">=</span> <span class="n">article</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">translator</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">'◎'</span> <span class="ow">or</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">' '</span><span class="p">:</span>
-                <span class="n">translator</span> <span class="o">=</span> <span class="n">translator</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span>
-
-        <span class="c1"># Get rid of translator and dictionary</span>
-        <span class="k">del</span> <span class="n">article</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">article</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span>
-
-        <span class="c1"># Separate article into EN and CH</span>
-        <span class="n">articleEN</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">articleCH</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">article</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">idx</span><span class="o">%</span><span class="k">2</span> == 0:
-                <span class="n">articleEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">articleCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">translator</span> <span class="o">=</span> <span class="s1">'null'</span>
-        <span class="n">articleEN</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'null'</span><span class="p">]</span>
-        <span class="n">articleCH</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'null'</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">title</span><span class="p">,</span> <span class="n">translator</span><span class="p">,</span> <span class="n">articleEN</span><span class="p">,</span> <span class="n">articleCH</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Execute, store results in a pandas dataframe, and save as an excel file.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Main code</span>
-
-<span class="n">links</span> <span class="o">=</span> <span class="n">getLinks</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
-<span class="n">title</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">translator</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">articleEN</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">articleCH</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">url</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">((</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">10</span>) == 0:
-        <span class="nb">print</span><span class="p">(</span><span class="s1">'Now on page '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">)))</span>
-    <span class="n">title_temp</span><span class="p">,</span> <span class="n">translator_temp</span><span class="p">,</span> <span class="n">articleEN_temp</span><span class="p">,</span> <span class="n">articleCH_temp</span> <span class="o">=</span> <span class="n">extractContent</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-    <span class="n">title</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title_temp</span><span class="p">)</span>
-    <span class="n">translator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">translator_temp</span><span class="p">)</span>
-    <span class="n">articleEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">articleEN_temp</span><span class="p">)</span>
-    <span class="n">articleCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">articleCH_temp</span><span class="p">)</span>
-    <span class="n">url</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-
-<span class="c1"># Store results in pandas.DataFrame</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="s1">'Title'</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
-        <span class="s1">'Translator'</span><span class="p">:</span> <span class="n">translator</span><span class="p">,</span>
-        <span class="s1">'articleEN'</span><span class="p">:</span> <span class="n">articleEN</span><span class="p">,</span>
-        <span class="s1">'articleCH'</span><span class="p">:</span> <span class="n">articleCH</span><span class="p">,</span>
-        <span class="s1">'url'</span><span class="p">:</span> <span class="n">url</span>
-<span class="p">})</span>
-
-<span class="c1"># Create a Pandas Excel writer using XlsxWriter as the engine.</span>
-<span class="n">writer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="s1">'liberty_results.xlsx'</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'xlsxwriter'</span><span class="p">)</span>
-
-<span class="c1"># Convert the dataframe to an XlsxWriter Excel object.</span>
-<span class="n">results</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'1-300'</span><span class="p">)</span>
-
-<span class="c1"># Close the Pandas Excel writer and output the Excel file.</span>
-<span class="n">writer</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-</pre></div>
-</div>
+<ul>
+<li><code>n_components</code>: the number of features you want your dataset projected onto</li>
+<li><code>n_neighbors</code>: the neighborhood size used to create the node of the neighborhood map.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1268,8 +1113,8 @@ Disclaimer: the results are for non-profit student research only.</p>
     <footer>
         <div class="tags">
             <a href="https://shaynemei.github.io/hackore/tag/python.html">python</a>
-            <a href="https://shaynemei.github.io/hackore/tag/webscraping.html">webscraping</a>
-            <a href="https://shaynemei.github.io/hackore/tag/bs4.html">bs4</a>
+            <a href="https://shaynemei.github.io/hackore/tag/machine-learning.html">machine learning</a>
+            <a href="https://shaynemei.github.io/hackore/tag/data-science.html">data science</a>
         </div>
         <div class="pure-g post-footer">
             <div class="pure-u-1 pure-u-md-1-2">

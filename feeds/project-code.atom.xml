@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Hackore</title><link href="https://shaynemei.github.io/hackore/" rel="alternate"></link><link href="https://shaynemei.github.io/hackore/feeds/project-code.atom.xml" rel="self"></link><id>https://shaynemei.github.io/hackore/</id><updated>2018-06-14T15:30:00+08:00</updated><entry><title>Scraping Liberty Times Net for translation corpora</title><link href="https://shaynemei.github.io/hackore/scrape_ltn.html" rel="alternate"></link><published>2018-06-14T15:30:00+08:00</published><updated>2018-06-14T15:30:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-06-14:hackore/scrape_ltn.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Hackore</title><link href="https://shaynemei.github.io/hackore/" rel="alternate"></link><link href="https://shaynemei.github.io/hackore/feeds/project-code.atom.xml" rel="self"></link><id>https://shaynemei.github.io/hackore/</id><updated>2018-06-14T15:30:00+08:00</updated><entry><title>Scraping Liberty Times Net</title><link href="https://shaynemei.github.io/hackore/scrape_ltn.html" rel="alternate"></link><published>2018-06-14T15:30:00+08:00</published><updated>2018-06-14T15:30:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-06-14:hackore/scrape_ltn.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -975,7 +975,8 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Web-Scraping"&gt;Web Scraping&lt;a class="anchor-link" href="#Web-Scraping"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This is the python web scraping code I've written to collect corpora for a translation project.&lt;/p&gt;
+&lt;h2 id="Web-Scraping"&gt;Web Scraping&lt;a class="anchor-link" href="#Web-Scraping"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This is the python web scraping code I've written to collect corpora for a translation project.&lt;br/&gt;
+Disclaimer: the results are for non-profit student research only.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1203,7 +1204,7 @@ h6:hover .anchor-link {
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</summary><category term="python webscraping bs4"></category></entry><entry><title>How To Use Gensim API To Get Similarity Scores</title><link href="https://shaynemei.github.io/hackore/gensim.html" rel="alternate"></link><published>2018-06-14T15:00:00+08:00</published><updated>2018-06-14T15:00:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-06-14:hackore/gensim.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+</summary><category term="python"></category><category term="webscraping"></category><category term="bs4"></category></entry><entry><title>How To Use Gensim API</title><link href="https://shaynemei.github.io/hackore/gensim.html" rel="alternate"></link><published>2018-06-14T15:00:00+08:00</published><updated>2018-06-14T15:00:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-06-14:hackore/gensim.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -2710,7 +2711,7 @@ Completed 500 lines! Hooray!!!! 102 more lines to go!
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</summary><category term="python gensim semantic"></category></entry><entry><title>How To Use Google Cloud Translation API</title><link href="https://shaynemei.github.io/hackore/gcloud_translation.html" rel="alternate"></link><published>2018-06-14T14:55:00+08:00</published><updated>2018-06-14T14:55:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-06-14:hackore/gcloud_translation.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+</summary><category term="python"></category><category term="gensim"></category><category term="semantic"></category></entry><entry><title>How To Use Google Cloud Translation API</title><link href="https://shaynemei.github.io/hackore/gcloud_translation.html" rel="alternate"></link><published>2018-06-14T14:55:00+08:00</published><updated>2018-06-14T14:55:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-06-14:hackore/gcloud_translation.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -6107,4 +6108,4 @@ Now at article 2157
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</summary><category term="python gcloud translation"></category></entry></feed>
+</summary><category term="python"></category><category term="gcloud"></category><category term="translation"></category></entry></feed>

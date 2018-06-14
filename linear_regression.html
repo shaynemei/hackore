@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>Scraping Liberty Times Net</title>
+        <title>Linear Regression</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://shaynemei.github.io/hackore/theme/css/main.css" />
         <link href="https://shaynemei.github.io/hackore/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Full Atom Feed" />
-        <link href="https://shaynemei.github.io/hackore/feeds/project-code.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Categories Atom Feed" />
+        <link href="https://shaynemei.github.io/hackore/feeds/notes.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Categories Atom Feed" />
 </head>
 <body>
 
@@ -21,8 +21,8 @@
                     <ul class="main-nav-list">
                         <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/" class="pure-menu-link">Hackore</a></li>
 
-                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/category/notes.html" class="pure-menu-link">Notes</a></li>
-                        <li class="main-nav-item active"><a href="https://shaynemei.github.io/hackore/category/project-code.html" class="pure-menu-link">Project Code</a></li>
+                        <li class="main-nav-item active"><a href="https://shaynemei.github.io/hackore/category/notes.html" class="pure-menu-link">Notes</a></li>
+                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/category/project-code.html" class="pure-menu-link">Project Code</a></li>
                     </ul>
                 </div>
              </div>
@@ -37,10 +37,10 @@
     <div class="entry-content">
         <div class="post-meta pure-g">
             <div class="pure-u-3-4 meta-data">
-                <a href="https://shaynemei.github.io/hackore/category/project-code.html" class="category">Project Code</a><br />
+                <a href="https://shaynemei.github.io/hackore/category/notes.html" class="category">Notes</a><br />
 
                 <a class="author" href="https://shaynemei.github.io/hackore/author/shayne.html">Shayne</a>
-                &mdash; <abbr title="2018-06-14T15:30:00+08:00">Thu 14 June 2018</abbr>
+                &mdash; <abbr title="2018-06-14T16:30:00+08:00">Thu 14 June 2018</abbr>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 
             <div class="background-image-small">
                 <div class="title-container">
-                    <h1>Scraping Liberty Times Net</h1>
+                    <h1>Linear Regression</h1>
                 </div>
             </div>
         </div>
@@ -1033,8 +1033,33 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Web-Scraping">Web Scraping<a class="anchor-link" href="#Web-Scraping">¶</a></h2><p>This is the python web scraping code I've written to collect corpora for a translation project.<br/>
-Disclaimer: the results are for non-profit student research only.</p>
+<h2 id="Linear-Regression">Linear Regression<a class="anchor-link" href="#Linear-Regression">¶</a></h2><p>A supervised learning technique, it doesn't force you to fine tune a bunch of parameters to get it working. You can literally just dump your data into it and let it produce its results.</p>
+<p><code>__init__(fit_intercept=True, normalize=False, copy_X=True, n_jobs=1)</code></p>
+<p><strong>parameters</strong></p>
+<ul>
+<li><code>fit_intercept</code>: (bool) Whether to calculate the intercept for this model</li>
+<li><code>normalize</code>: (bool) Whether to normalize input before regression</li>
+<li><code>copy_X</code>: (bool) Whether X will be copied; else, it may be overwritten</li>
+<li><code>n_jobs</code>: (int) Number of jobs to use for the computation. If -1 all CPUs are used.</li>
+</ul>
+<p><strong>attributes</strong></p>
+<ul>
+<li><code>coef_</code>: estimated coefficients for the linear regression</li>
+<li><code>intercept_</code>: the scalar constant offset value</li>
+</ul>
+<p><strong>GOTCHAS</strong></p>
+<ul>
+<li><code>.score()</code> returns the R^2 coefficient</li>
+<li>R^2 coefficient <ul>
+<li>&lt;= 1 (regression exactly matches data)</li>
+<li>tends to increase with number of features (overfitting)</li>
+<li>normalised, unlike the the sum of squared distances, not affected by the number of observations</li>
+</ul>
+</li>
+<li>assumes your variables are linearly independent, i.e. the feature values of one sample have nothing to do with the values of another sample</li>
+<li>the further you extrapolate from the range of your training data, the less reliable the results of the regression</li>
+</ul>
+<p><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">DOCUMENTATION</a></p>
 </div>
 </div>
 </div>
@@ -1043,75 +1068,9 @@ Disclaimer: the results are for non-profit student research only.</p>
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define a helper function to remove all occurences of a certain value from a list</span>
-<span class="k">def</span> <span class="nf">remove_values_from_list</span><span class="p">(</span><span class="n">the_list</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-   <span class="k">return</span> <span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">the_list</span> <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">val</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>First loop through n pages and get all the links to every article.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the links to every article up to page n</span>
-<span class="k">def</span> <span class="nf">getLinks</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    
-    <span class="c1"># Start at page 1</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s1">'http://iservice.ltn.com.tw/Service/english/index.php?page=1'</span>
-    
-    <span class="c1"># Main list with all links to return</span>
-    <span class="n">links_all</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="c1"># Loop through pages till page n</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'div'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'content_english'</span><span class="p">)</span>
-        
-        <span class="c1"># Select links and store them in a list</span>
-        <span class="n">links_res</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span>
-        <span class="n">links_temp</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">links_res</span><span class="p">:</span> 
-            <span class="n">links_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">'href'</span><span class="p">])</span>
-        <span class="k">del</span> <span class="n">links_temp</span><span class="p">[</span><span class="mi">10</span><span class="p">:]</span>
-
-        <span class="c1"># Concat proper full url</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links_temp</span><span class="p">):</span>
-            <span class="n">links_temp</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'http://iservice.ltn.com.tw/Service/english/'</span> <span class="o">+</span> <span class="n">val</span>
-        
-        <span class="c1"># Append to main list</span>
-        <span class="n">links_all</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">links_temp</span><span class="p">)</span>
-        
-        <span class="c1"># Update path to next page</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span>
-        
-    <span class="k">return</span> <span class="n">links_all</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">linear_model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1121,7 +1080,7 @@ Disclaimer: the results are for non-profit student research only.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For each link, extract the article and separate the English part and the Chinese part.</p>
+<h3 id="Visualisation">Visualisation<a class="anchor-link" href="#Visualisation">¶</a></h3><h4 id="Regression-Line">Regression Line<a class="anchor-link" href="#Regression-Line">¶</a></h4><p>note: scatter() can only take numpy 2DArray</p>
 </div>
 </div>
 </div>
@@ -1130,51 +1089,32 @@ Disclaimer: the results are for non-profit student research only.</p>
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get all information we want from an article</span>
-<span class="k">def</span> <span class="nf">extractContent</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Plots your test observations, compares them to the regression line, and displays the R2 coefficient</span>
+<span class="k">def</span> <span class="nf">drawLine</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">R2</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'g'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">)</span><span class="n">llov</span> <span class="p">;</span><span class="n">khbjcb</span> <span class="n">n</span>  
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">'orange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 
-    <span class="c1"># Get title</span>
-    <span class="k">try</span><span class="p">:</span> 
-        <span class="n">title</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'h2'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'title'</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[</span><span class="mi">9</span><span class="p">:]</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="s1">'null'</span>
-    
-    <span class="c1"># Append all content into a list</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">content_raw</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">'newsContent'</span><span class="p">)</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">content_raw</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'p'</span><span class="p">)</span>
-        <span class="n">article</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
-            <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\r\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
-            <span class="n">article</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">article</span> <span class="o">=</span> <span class="n">remove_values_from_list</span><span class="p">(</span><span class="n">article</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">+=</span> <span class="s2">" R2: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">R2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Intercept(s): "</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
 
-        <span class="c1"># Get name of translator</span>
-        <span class="n">translator</span> <span class="o">=</span> <span class="n">article</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">translator</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">'◎'</span> <span class="ow">or</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">' '</span><span class="p">:</span>
-                <span class="n">translator</span> <span class="o">=</span> <span class="n">translator</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span>
-
-        <span class="c1"># Get rid of translator and dictionary</span>
-        <span class="k">del</span> <span class="n">article</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">article</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span>
-
-        <span class="c1"># Separate article into EN and CH</span>
-        <span class="n">articleEN</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">articleCH</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">article</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">idx</span><span class="o">%</span><span class="k">2</span> == 0:
-                <span class="n">articleEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">articleCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">translator</span> <span class="o">=</span> <span class="s1">'null'</span>
-        <span class="n">articleEN</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'null'</span><span class="p">]</span>
-        <span class="n">articleCH</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'null'</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">title</span><span class="p">,</span> <span class="n">translator</span><span class="p">,</span> <span class="n">articleEN</span><span class="p">,</span> <span class="n">articleCH</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Slicing a Series and converting it into a numpy 2DArray</span>
+<span class="n">roomBoard</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">'Room.Board'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">accStudent</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">'Accept'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1184,7 +1124,7 @@ Disclaimer: the results are for non-profit student research only.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Execute, store results in a pandas dataframe, and save as an excel file.</p>
+<h4 id="Regression-Plane">Regression Plane<a class="anchor-link" href="#Regression-Plane">¶</a></h4>
 </div>
 </div>
 </div>
@@ -1193,41 +1133,48 @@ Disclaimer: the results are for non-profit student research only.</p>
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Main code</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">drawPlane</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">R2</span><span class="p">):</span>
+    <span class="c1"># This convenience method will take care of plotting your</span>
+    <span class="c1"># test observations, comparing them to the regression plane,</span>
+    <span class="c1"># and displaying the R2 coefficient</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">Axes3D</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">'prediction'</span><span class="p">)</span>
 
-<span class="n">links</span> <span class="o">=</span> <span class="n">getLinks</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
-<span class="n">title</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">translator</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">articleEN</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">articleCH</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">url</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">((</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">10</span>) == 0:
-        <span class="nb">print</span><span class="p">(</span><span class="s1">'Now on page '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">)))</span>
-    <span class="n">title_temp</span><span class="p">,</span> <span class="n">translator_temp</span><span class="p">,</span> <span class="n">articleEN_temp</span><span class="p">,</span> <span class="n">articleCH_temp</span> <span class="o">=</span> <span class="n">extractContent</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-    <span class="n">title</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title_temp</span><span class="p">)</span>
-    <span class="n">translator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">translator_temp</span><span class="p">)</span>
-    <span class="n">articleEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">articleEN_temp</span><span class="p">)</span>
-    <span class="n">articleCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">articleCH_temp</span><span class="p">)</span>
-    <span class="n">url</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+    
+    <span class="c1"># You might have passed in a DataFrame, a Series (slice),</span>
+    <span class="c1"># an NDArray, or a Python List... so let's keep it simple:</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">col1</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">col2</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
 
-<span class="c1"># Store results in pandas.DataFrame</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="s1">'Title'</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
-        <span class="s1">'Translator'</span><span class="p">:</span> <span class="n">translator</span><span class="p">,</span>
-        <span class="s1">'articleEN'</span><span class="p">:</span> <span class="n">articleEN</span><span class="p">,</span>
-        <span class="s1">'articleCH'</span><span class="p">:</span> <span class="n">articleCH</span><span class="p">,</span>
-        <span class="s1">'url'</span><span class="p">:</span> <span class="n">url</span>
-<span class="p">})</span>
+    
+    <span class="c1"># Set up a Grid. We could have predicted on the actual</span>
+    <span class="c1"># col1, col2 values directly; but that would have generated</span>
+    <span class="c1"># a mesh with WAY too fine a grid, which would have detracted</span>
+    <span class="c1"># from the visualization</span>
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">col1</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">col1</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">col2</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="p">(</span><span class="n">x_max</span><span class="o">-</span><span class="n">x_min</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="p">(</span><span class="n">y_max</span><span class="o">-</span><span class="n">y_min</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-<span class="c1"># Create a Pandas Excel writer using XlsxWriter as the engine.</span>
-<span class="n">writer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="s1">'liberty_results.xlsx'</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'xlsxwriter'</span><span class="p">)</span>
+    
+    <span class="c1"># Predict based on possible input values that span the domain</span>
+    <span class="c1"># of the x and y inputs:</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>  <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>  <span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-<span class="c1"># Convert the dataframe to an XlsxWriter Excel object.</span>
-<span class="n">results</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'1-300'</span><span class="p">)</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'g'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'orange'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 
-<span class="c1"># Close the Pandas Excel writer and output the Excel file.</span>
-<span class="n">writer</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">+=</span> <span class="s2">" R2: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">R2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Intercept(s): "</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1268,8 +1215,8 @@ Disclaimer: the results are for non-profit student research only.</p>
     <footer>
         <div class="tags">
             <a href="https://shaynemei.github.io/hackore/tag/python.html">python</a>
-            <a href="https://shaynemei.github.io/hackore/tag/webscraping.html">webscraping</a>
-            <a href="https://shaynemei.github.io/hackore/tag/bs4.html">bs4</a>
+            <a href="https://shaynemei.github.io/hackore/tag/machine-learning.html">machine learning</a>
+            <a href="https://shaynemei.github.io/hackore/tag/data-science.html">data science</a>
         </div>
         <div class="pure-g post-footer">
             <div class="pure-u-1 pure-u-md-1-2">
