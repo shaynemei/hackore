@@ -1,0 +1,3499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>How To Use Google Cloud Translation API</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://shaynemei.github.io/hackore/theme/css/main.css" />
+        <link href="https://shaynemei.github.io/hackore/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Full Atom Feed" />
+        <link href="https://shaynemei.github.io/hackore/feeds/project-code.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Categories Atom Feed" />
+</head>
+<body>
+
+    <div class="main-nav-container">
+
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-lg-2-3">
+                <div class="main-nav">
+                    <ul class="main-nav-list">
+                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/" class="pure-menu-link">Hackore</a></li>
+
+                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/category/notes.html" class="pure-menu-link">Notes</a></li>
+                        <li class="main-nav-item active"><a href="https://shaynemei.github.io/hackore/category/project-code.html" class="pure-menu-link">Project Code</a></li>
+                    </ul>
+                </div>
+             </div>
+
+             <div class="pure-u-1 pure-u-lg-1-3"></div>
+        </div>
+
+    </div>
+
+
+<div class="page-container">
+    <div class="entry-content">
+        <div class="post-meta pure-g">
+            <div class="pure-u-3-4 meta-data">
+                <a href="https://shaynemei.github.io/hackore/category/project-code.html" class="category">Project Code</a><br />
+
+                <a class="author" href="https://shaynemei.github.io/hackore/author/shayne.html">Shayne</a>
+                &mdash; <abbr title="2018-06-14T14:55:00+08:00">Thu 14 June 2018</abbr>
+            </div>
+        </div>
+    </div>
+
+    <div class="article-header-container">
+        <div class="background-image-container">
+
+            <div class="background-image-small">
+                <div class="title-container">
+                    <h1>How To Use Google Cloud Translation API</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="entry-content">
+        <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  div.cell.selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+.rendered_html pre,
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+.rendered_html td,
+
+
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Google-Cloud-Translation-API">Google Cloud Translation API<a class="anchor-link" href="#Google-Cloud-Translation-API">¶</a></h2><p>Here is the code I used to translate the LTN corpora.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="k">import</span> <span class="n">translate</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Explicitly-set-Google-Authentication-Credentials">Explicitly set Google Authentication Credentials<a class="anchor-link" href="#Explicitly-set-Google-Authentication-Credentials">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"GOOGLE_APPLICATION_CREDENTIALS"</span><span class="p">]</span><span class="o">=</span><span class="s2">"PATH TO FILE"</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Instantiate-the-Google-translation-client">Instantiate the Google translation client<a class="anchor-link" href="#Instantiate-the-Google-translation-client">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">translate_client</span> <span class="o">=</span> <span class="n">translate</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+<span class="n">target</span><span class="o">=</span><span class="s1">'en'</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Read-in-the-wrangled-results-from-web-scraping">Read in the wrangled results from web scraping<a class="anchor-link" href="#Read-in-the-wrangled-results-from-web-scraping">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [13]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">'liberty_results_wrangled.xlsx'</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'articleCH'</span><span class="p">]</span>
+<span class="n">translatedEN</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">failed</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Notes-when-using-Google-Translation-API">Notes when using Google Translation API<a class="anchor-link" href="#Notes-when-using-Google-Translation-API">¶</a></h3><ul>
+<li>set daily maximum quota to unlimited</li>
+<li>there is a user <strong>rate</strong> limit --&gt; use <code>time.sleep()</code> to buffer the quota instead rerunning the whole thing</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [25]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">article</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Now at article '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">translation</span> <span class="o">=</span> <span class="n">translate_client</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">article</span><span class="p">,</span> <span class="n">target_language</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">translatedEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">translation</span><span class="p">[</span><span class="s1">'translatedText'</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">translatedEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'ao654vm0'</span><span class="p">)</span>
+        <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Now at article 0
+Now at article 1
+Now at article 2
+Now at article 3
+Now at article 4
+Now at article 5
+Now at article 6
+Now at article 7
+Now at article 8
+Now at article 9
+Now at article 10
+Now at article 11
+Now at article 12
+Now at article 13
+Now at article 14
+Now at article 15
+Now at article 16
+Now at article 17
+Now at article 18
+Now at article 19
+Now at article 20
+Now at article 21
+Now at article 22
+Now at article 23
+Now at article 24
+Now at article 25
+Now at article 26
+Now at article 27
+Now at article 28
+Now at article 29
+Now at article 30
+Now at article 31
+Now at article 32
+Now at article 33
+Now at article 34
+Now at article 35
+Now at article 36
+Now at article 37
+Now at article 38
+Now at article 39
+Now at article 40
+Now at article 41
+Now at article 42
+Now at article 43
+Now at article 44
+Now at article 45
+Now at article 46
+Now at article 47
+Now at article 48
+Now at article 49
+Now at article 50
+Now at article 51
+Now at article 52
+Now at article 53
+Now at article 54
+Now at article 55
+Now at article 56
+Now at article 57
+Now at article 58
+Now at article 59
+Now at article 60
+Now at article 61
+Now at article 62
+Now at article 63
+Now at article 64
+Now at article 65
+Now at article 66
+Now at article 67
+Now at article 68
+Now at article 69
+Now at article 70
+Now at article 71
+Now at article 72
+Now at article 73
+Now at article 74
+Now at article 75
+Now at article 76
+Now at article 77
+Now at article 78
+Now at article 79
+Now at article 80
+Now at article 81
+Now at article 82
+Now at article 83
+Now at article 84
+Now at article 85
+Now at article 86
+Now at article 87
+Now at article 88
+Now at article 89
+Now at article 90
+Now at article 91
+Now at article 92
+Now at article 93
+Now at article 94
+Now at article 95
+Now at article 96
+Now at article 97
+Now at article 98
+Now at article 99
+Now at article 100
+Now at article 101
+Now at article 102
+Now at article 103
+Now at article 104
+Now at article 105
+Now at article 106
+Now at article 107
+Now at article 108
+Now at article 109
+Now at article 110
+Now at article 111
+Now at article 112
+Now at article 113
+Now at article 114
+Now at article 115
+Now at article 116
+Now at article 117
+Now at article 118
+Now at article 119
+Now at article 120
+Now at article 121
+Now at article 122
+Now at article 123
+Now at article 124
+Now at article 125
+Now at article 126
+Now at article 127
+Now at article 128
+Now at article 129
+Now at article 130
+Now at article 131
+Now at article 132
+Now at article 133
+Now at article 134
+Now at article 135
+Now at article 136
+Now at article 137
+Now at article 138
+Now at article 139
+Now at article 140
+Now at article 141
+Now at article 142
+Now at article 143
+Now at article 144
+Now at article 145
+Now at article 146
+Now at article 147
+Now at article 148
+Now at article 149
+Now at article 150
+Now at article 151
+Now at article 152
+Now at article 153
+Now at article 154
+Now at article 155
+Now at article 156
+Now at article 157
+Now at article 158
+Now at article 159
+Now at article 160
+Now at article 161
+Now at article 162
+Now at article 163
+Now at article 164
+Now at article 165
+Now at article 166
+Now at article 167
+Now at article 168
+Now at article 169
+Now at article 170
+Now at article 171
+Now at article 172
+Now at article 173
+Now at article 174
+Now at article 175
+Now at article 176
+Now at article 177
+Now at article 178
+Now at article 179
+Now at article 180
+Now at article 181
+Now at article 182
+Now at article 183
+Now at article 184
+Now at article 185
+Now at article 186
+Now at article 187
+Now at article 188
+Now at article 189
+Now at article 190
+Now at article 191
+Now at article 192
+Now at article 193
+Now at article 194
+Now at article 195
+Now at article 196
+Now at article 197
+Now at article 198
+Now at article 199
+Now at article 200
+Now at article 201
+Now at article 202
+Now at article 203
+Now at article 204
+Now at article 205
+Now at article 206
+Now at article 207
+Now at article 208
+Now at article 209
+Now at article 210
+Now at article 211
+Now at article 212
+Now at article 213
+Now at article 214
+Now at article 215
+Now at article 216
+Now at article 217
+Now at article 218
+Now at article 219
+Now at article 220
+Now at article 221
+Now at article 222
+Now at article 223
+Now at article 224
+Now at article 225
+Now at article 226
+Now at article 227
+Now at article 228
+Now at article 229
+Now at article 230
+Now at article 231
+Now at article 232
+Now at article 233
+Now at article 234
+Now at article 235
+Now at article 236
+Now at article 237
+Now at article 238
+Now at article 239
+Now at article 240
+Now at article 241
+Now at article 242
+Now at article 243
+Now at article 244
+Now at article 245
+Now at article 246
+Now at article 247
+Now at article 248
+Now at article 249
+Now at article 250
+Now at article 251
+Now at article 252
+Now at article 253
+Now at article 254
+Now at article 255
+Now at article 256
+Now at article 257
+Now at article 258
+Now at article 259
+Now at article 260
+Now at article 261
+Now at article 262
+Now at article 263
+Now at article 264
+Now at article 265
+Now at article 266
+Now at article 267
+Now at article 268
+Now at article 269
+Now at article 270
+Now at article 271
+Now at article 272
+Now at article 273
+Now at article 274
+Now at article 275
+Now at article 276
+Now at article 277
+Now at article 278
+Now at article 279
+Now at article 280
+Now at article 281
+Now at article 282
+Now at article 283
+Now at article 284
+Now at article 285
+Now at article 286
+Now at article 287
+Now at article 288
+Now at article 289
+Now at article 290
+Now at article 291
+Now at article 292
+Now at article 293
+Now at article 294
+Now at article 295
+Now at article 296
+Now at article 297
+Now at article 298
+Now at article 299
+Now at article 300
+Now at article 301
+Now at article 302
+Now at article 303
+Now at article 304
+Now at article 305
+Now at article 306
+Now at article 307
+Now at article 308
+Now at article 309
+Now at article 310
+Now at article 311
+Now at article 312
+Now at article 313
+Now at article 314
+Now at article 315
+Now at article 316
+Now at article 317
+Now at article 318
+Now at article 319
+Now at article 320
+Now at article 321
+Now at article 322
+Now at article 323
+Now at article 324
+Now at article 325
+Now at article 326
+Now at article 327
+Now at article 328
+Now at article 329
+Now at article 330
+Now at article 331
+Now at article 332
+Now at article 333
+Now at article 334
+Now at article 335
+Now at article 336
+Now at article 337
+Now at article 338
+Now at article 339
+Now at article 340
+Now at article 341
+Now at article 342
+Now at article 343
+Now at article 344
+Now at article 345
+Now at article 346
+Now at article 347
+Now at article 348
+Now at article 349
+Now at article 350
+Now at article 351
+Now at article 352
+Now at article 353
+Now at article 354
+Now at article 355
+Now at article 356
+Now at article 357
+Now at article 358
+Now at article 359
+Now at article 360
+Now at article 361
+Now at article 362
+Now at article 363
+Now at article 364
+Now at article 365
+Now at article 366
+Now at article 367
+Now at article 368
+Now at article 369
+Now at article 370
+Now at article 371
+Now at article 372
+Now at article 373
+Now at article 374
+Now at article 375
+Now at article 376
+Now at article 377
+Now at article 378
+Now at article 379
+Now at article 380
+Now at article 381
+Now at article 382
+Now at article 383
+Now at article 384
+Now at article 385
+Now at article 386
+Now at article 387
+Now at article 388
+Now at article 389
+Now at article 390
+Now at article 391
+Now at article 392
+Now at article 393
+Now at article 394
+Now at article 395
+Now at article 396
+Now at article 397
+Now at article 398
+Now at article 399
+Now at article 400
+Now at article 401
+Now at article 402
+Now at article 403
+Now at article 404
+Now at article 405
+Now at article 406
+Now at article 407
+Now at article 408
+Now at article 409
+Now at article 410
+Now at article 411
+Now at article 412
+Now at article 413
+Now at article 414
+Now at article 415
+Now at article 416
+Now at article 417
+Now at article 418
+Now at article 419
+Now at article 420
+Now at article 421
+Now at article 422
+Now at article 423
+Now at article 424
+Now at article 425
+Now at article 426
+Now at article 427
+Now at article 428
+Now at article 429
+Now at article 430
+Now at article 431
+Now at article 432
+Now at article 433
+Now at article 434
+Now at article 435
+Now at article 436
+Now at article 437
+Now at article 438
+Now at article 439
+Now at article 440
+Now at article 441
+Now at article 442
+Now at article 443
+Now at article 444
+Now at article 445
+Now at article 446
+Now at article 447
+Now at article 448
+Now at article 449
+Now at article 450
+Now at article 451
+Now at article 452
+Now at article 453
+Now at article 454
+Now at article 455
+Now at article 456
+Now at article 457
+Now at article 458
+Now at article 459
+Now at article 460
+Now at article 461
+Now at article 462
+Now at article 463
+Now at article 464
+Now at article 465
+Now at article 466
+Now at article 467
+Now at article 468
+Now at article 469
+Now at article 470
+Now at article 471
+Now at article 472
+Now at article 473
+Now at article 474
+Now at article 475
+Now at article 476
+Now at article 477
+Now at article 478
+Now at article 479
+Now at article 480
+Now at article 481
+Now at article 482
+Now at article 483
+Now at article 484
+Now at article 485
+Now at article 486
+Now at article 487
+Now at article 488
+Now at article 489
+Now at article 490
+Now at article 491
+Now at article 492
+Now at article 493
+Now at article 494
+Now at article 495
+Now at article 496
+Now at article 497
+Now at article 498
+Now at article 499
+Now at article 500
+Now at article 501
+Now at article 502
+Now at article 503
+Now at article 504
+Now at article 505
+Now at article 506
+Now at article 507
+Now at article 508
+Now at article 509
+Now at article 510
+Now at article 511
+Now at article 512
+Now at article 513
+Now at article 514
+Now at article 515
+Now at article 516
+Now at article 517
+Now at article 518
+Now at article 519
+Now at article 520
+Now at article 521
+Now at article 522
+Now at article 523
+Now at article 524
+Now at article 525
+Now at article 526
+Now at article 527
+Now at article 528
+Now at article 529
+Now at article 530
+Now at article 531
+Now at article 532
+Now at article 533
+Now at article 534
+Now at article 535
+Now at article 536
+Now at article 537
+Now at article 538
+Now at article 539
+Now at article 540
+Now at article 541
+Now at article 542
+Now at article 543
+Now at article 544
+Now at article 545
+Now at article 546
+Now at article 547
+Now at article 548
+Now at article 549
+Now at article 550
+Now at article 551
+Now at article 552
+Now at article 553
+Now at article 554
+Now at article 555
+Now at article 556
+Now at article 557
+Now at article 558
+Now at article 559
+Now at article 560
+Now at article 561
+Now at article 562
+Now at article 563
+Now at article 564
+Now at article 565
+Now at article 566
+Now at article 567
+Now at article 568
+Now at article 569
+Now at article 570
+Now at article 571
+Now at article 572
+Now at article 573
+Now at article 574
+Now at article 575
+Now at article 576
+Now at article 577
+Now at article 578
+Now at article 579
+Now at article 580
+Now at article 581
+Now at article 582
+Now at article 583
+Now at article 584
+Now at article 585
+Now at article 586
+Now at article 587
+Now at article 588
+Now at article 589
+Now at article 590
+Now at article 591
+Now at article 592
+Now at article 593
+Now at article 594
+Now at article 595
+Now at article 596
+Now at article 597
+Now at article 598
+Now at article 599
+Now at article 600
+Now at article 601
+Now at article 602
+Now at article 603
+Now at article 604
+Now at article 605
+Now at article 606
+Now at article 607
+Now at article 608
+Now at article 609
+Now at article 610
+Now at article 611
+Now at article 612
+Now at article 613
+Now at article 614
+Now at article 615
+Now at article 616
+Now at article 617
+Now at article 618
+Now at article 619
+Now at article 620
+Now at article 621
+Now at article 622
+Now at article 623
+Now at article 624
+Now at article 625
+Now at article 626
+Now at article 627
+Now at article 628
+Now at article 629
+Now at article 630
+Now at article 631
+Now at article 632
+Now at article 633
+Now at article 634
+Now at article 635
+Now at article 636
+Now at article 637
+Now at article 638
+Now at article 639
+Now at article 640
+Now at article 641
+Now at article 642
+Now at article 643
+Now at article 644
+Now at article 645
+Now at article 646
+Now at article 647
+Now at article 648
+Now at article 649
+Now at article 650
+Now at article 651
+Now at article 652
+Now at article 653
+Now at article 654
+Now at article 655
+Now at article 656
+Now at article 657
+Now at article 658
+Now at article 659
+Now at article 660
+Now at article 661
+Now at article 662
+Now at article 663
+Now at article 664
+Now at article 665
+Now at article 666
+Now at article 667
+Now at article 668
+Now at article 669
+Now at article 670
+Now at article 671
+Now at article 672
+Now at article 673
+Now at article 674
+Now at article 675
+Now at article 676
+Now at article 677
+Now at article 678
+Now at article 679
+Now at article 680
+Now at article 681
+Now at article 682
+Now at article 683
+Now at article 684
+Now at article 685
+Now at article 686
+Now at article 687
+Now at article 688
+Now at article 689
+Now at article 690
+Now at article 691
+Now at article 692
+Now at article 693
+Now at article 694
+Now at article 695
+Now at article 696
+Now at article 697
+Now at article 698
+Now at article 699
+Now at article 700
+Now at article 701
+Now at article 702
+Now at article 703
+Now at article 704
+Now at article 705
+Now at article 706
+Now at article 707
+Now at article 708
+Now at article 709
+Now at article 710
+Now at article 711
+Now at article 712
+Now at article 713
+Now at article 714
+Now at article 715
+Now at article 716
+Now at article 717
+Now at article 718
+Now at article 719
+Now at article 720
+Now at article 721
+Now at article 722
+Now at article 723
+Now at article 724
+Now at article 725
+Now at article 726
+Now at article 727
+Now at article 728
+Now at article 729
+Now at article 730
+Now at article 731
+Now at article 732
+Now at article 733
+Now at article 734
+Now at article 735
+Now at article 736
+Now at article 737
+Now at article 738
+Now at article 739
+Now at article 740
+Now at article 741
+Now at article 742
+Now at article 743
+Now at article 744
+Now at article 745
+Now at article 746
+Now at article 747
+Now at article 748
+Now at article 749
+Now at article 750
+Now at article 751
+Now at article 752
+Now at article 753
+Now at article 754
+Now at article 755
+Now at article 756
+Now at article 757
+Now at article 758
+Now at article 759
+Now at article 760
+Now at article 761
+Now at article 762
+Now at article 763
+Now at article 764
+Now at article 765
+Now at article 766
+Now at article 767
+Now at article 768
+Now at article 769
+Now at article 770
+Now at article 771
+Now at article 772
+Now at article 773
+Now at article 774
+Now at article 775
+Now at article 776
+Now at article 777
+Now at article 778
+Now at article 779
+Now at article 780
+Now at article 781
+Now at article 782
+Now at article 783
+Now at article 784
+Now at article 785
+Now at article 786
+Now at article 787
+Now at article 788
+Now at article 789
+Now at article 790
+Now at article 791
+Now at article 792
+Now at article 793
+Now at article 794
+Now at article 795
+Now at article 796
+Now at article 797
+Now at article 798
+Now at article 799
+Now at article 800
+Now at article 801
+Now at article 802
+Now at article 803
+Now at article 804
+Now at article 805
+Now at article 806
+Now at article 807
+Now at article 808
+Now at article 809
+Now at article 810
+Now at article 811
+Now at article 812
+Now at article 813
+Now at article 814
+Now at article 815
+Now at article 816
+Now at article 817
+Now at article 818
+Now at article 819
+Now at article 820
+Now at article 821
+Now at article 822
+Now at article 823
+Now at article 824
+Now at article 825
+Now at article 826
+Now at article 827
+Now at article 828
+Now at article 829
+Now at article 830
+Now at article 831
+Now at article 832
+Now at article 833
+Now at article 834
+Now at article 835
+Now at article 836
+Now at article 837
+Now at article 838
+Now at article 839
+Now at article 840
+Now at article 841
+Now at article 842
+Now at article 843
+Now at article 844
+Now at article 845
+Now at article 846
+Now at article 847
+Now at article 848
+Now at article 849
+Now at article 850
+Now at article 851
+Now at article 852
+Now at article 853
+Now at article 854
+Now at article 855
+Now at article 856
+Now at article 857
+Now at article 858
+Now at article 859
+Now at article 860
+Now at article 861
+Now at article 862
+Now at article 863
+Now at article 864
+Now at article 865
+Now at article 866
+Now at article 867
+Now at article 868
+Now at article 869
+Now at article 870
+Now at article 871
+Now at article 872
+Now at article 873
+Now at article 874
+Now at article 875
+Now at article 876
+Now at article 877
+Now at article 878
+Now at article 879
+Now at article 880
+Now at article 881
+Now at article 882
+Now at article 883
+Now at article 884
+Now at article 885
+Now at article 886
+Now at article 887
+Now at article 888
+Now at article 889
+Now at article 890
+Now at article 891
+Now at article 892
+Now at article 893
+Now at article 894
+Now at article 895
+Now at article 896
+Now at article 897
+Now at article 898
+Now at article 899
+Now at article 900
+Now at article 901
+Now at article 902
+Now at article 903
+Now at article 904
+Now at article 905
+Now at article 906
+Now at article 907
+Now at article 908
+Now at article 909
+Now at article 910
+Now at article 911
+Now at article 912
+Now at article 913
+Now at article 914
+Now at article 915
+Now at article 916
+Now at article 917
+Now at article 918
+Now at article 919
+Now at article 920
+Now at article 921
+Now at article 922
+Now at article 923
+Now at article 924
+Now at article 925
+Now at article 926
+Now at article 927
+Now at article 928
+Now at article 929
+Now at article 930
+Now at article 931
+Now at article 932
+Now at article 933
+Now at article 934
+Now at article 935
+Now at article 936
+Now at article 937
+Now at article 938
+Now at article 939
+Now at article 940
+Now at article 941
+Now at article 942
+Now at article 943
+Now at article 944
+Now at article 945
+Now at article 946
+Now at article 947
+Now at article 948
+Now at article 949
+Now at article 950
+Now at article 951
+Now at article 952
+Now at article 953
+Now at article 954
+Now at article 955
+Now at article 956
+Now at article 957
+Now at article 958
+Now at article 959
+Now at article 960
+Now at article 961
+Now at article 962
+Now at article 963
+Now at article 964
+Now at article 965
+Now at article 966
+Now at article 967
+Now at article 968
+Now at article 969
+Now at article 970
+Now at article 971
+Now at article 972
+Now at article 973
+Now at article 974
+Now at article 975
+Now at article 976
+Now at article 977
+Now at article 978
+Now at article 979
+Now at article 980
+Now at article 981
+Now at article 982
+Now at article 983
+Now at article 984
+Now at article 985
+Now at article 986
+Now at article 987
+Now at article 988
+Now at article 989
+Now at article 990
+Now at article 991
+Now at article 992
+Now at article 993
+Now at article 994
+Now at article 995
+Now at article 996
+Now at article 997
+Now at article 998
+Now at article 999
+Now at article 1000
+Now at article 1001
+Now at article 1002
+Now at article 1003
+Now at article 1004
+Now at article 1005
+Now at article 1006
+Now at article 1007
+Now at article 1008
+Now at article 1009
+Now at article 1010
+Now at article 1011
+Now at article 1012
+Now at article 1013
+Now at article 1014
+Now at article 1015
+Now at article 1016
+Now at article 1017
+Now at article 1018
+Now at article 1019
+Now at article 1020
+Now at article 1021
+Now at article 1022
+Now at article 1023
+Now at article 1024
+Now at article 1025
+Now at article 1026
+Now at article 1027
+Now at article 1028
+Now at article 1029
+Now at article 1030
+Now at article 1031
+Now at article 1032
+Now at article 1033
+Now at article 1034
+Now at article 1035
+Now at article 1036
+Now at article 1037
+Now at article 1038
+Now at article 1039
+Now at article 1040
+Now at article 1041
+Now at article 1042
+Now at article 1043
+Now at article 1044
+Now at article 1045
+Now at article 1046
+Now at article 1047
+Now at article 1048
+Now at article 1049
+Now at article 1050
+Now at article 1051
+Now at article 1052
+Now at article 1053
+Now at article 1054
+Now at article 1055
+Now at article 1056
+Now at article 1057
+Now at article 1058
+Now at article 1059
+Now at article 1060
+Now at article 1061
+Now at article 1062
+Now at article 1063
+Now at article 1064
+Now at article 1065
+Now at article 1066
+Now at article 1067
+Now at article 1068
+Now at article 1069
+Now at article 1070
+Now at article 1071
+Now at article 1072
+Now at article 1073
+Now at article 1074
+Now at article 1075
+Now at article 1076
+Now at article 1077
+Now at article 1078
+Now at article 1079
+Now at article 1080
+Now at article 1081
+Now at article 1082
+Now at article 1083
+Now at article 1084
+Now at article 1085
+Now at article 1086
+Now at article 1087
+Now at article 1088
+Now at article 1089
+Now at article 1090
+Now at article 1091
+Now at article 1092
+Now at article 1093
+Now at article 1094
+Now at article 1095
+Now at article 1096
+Now at article 1097
+Now at article 1098
+Now at article 1099
+Now at article 1100
+Now at article 1101
+Now at article 1102
+Now at article 1103
+Now at article 1104
+Now at article 1105
+Now at article 1106
+Now at article 1107
+Now at article 1108
+Now at article 1109
+Now at article 1110
+Now at article 1111
+Now at article 1112
+Now at article 1113
+Now at article 1114
+Now at article 1115
+Now at article 1116
+Now at article 1117
+Now at article 1118
+Now at article 1119
+Now at article 1120
+Now at article 1121
+Now at article 1122
+Now at article 1123
+Now at article 1124
+Now at article 1125
+Now at article 1126
+Now at article 1127
+Now at article 1128
+Now at article 1129
+Now at article 1130
+Now at article 1131
+Now at article 1132
+Now at article 1133
+Now at article 1134
+Now at article 1135
+Now at article 1136
+Now at article 1137
+Now at article 1138
+Now at article 1139
+Now at article 1140
+Now at article 1141
+Now at article 1142
+Now at article 1143
+Now at article 1144
+Now at article 1145
+Now at article 1146
+Now at article 1147
+Now at article 1148
+Now at article 1149
+Now at article 1150
+Now at article 1151
+Now at article 1152
+Now at article 1153
+Now at article 1154
+Now at article 1155
+Now at article 1156
+Now at article 1157
+Now at article 1158
+Now at article 1159
+Now at article 1160
+Now at article 1161
+Now at article 1162
+Now at article 1163
+Now at article 1164
+Now at article 1165
+Now at article 1166
+Now at article 1167
+Now at article 1168
+Now at article 1169
+Now at article 1170
+Now at article 1171
+Now at article 1172
+Now at article 1173
+Now at article 1174
+Now at article 1175
+Now at article 1176
+Now at article 1177
+Now at article 1178
+Now at article 1179
+Now at article 1180
+Now at article 1181
+Now at article 1182
+Now at article 1183
+Now at article 1184
+Now at article 1185
+Now at article 1186
+Now at article 1187
+Now at article 1188
+Now at article 1189
+Now at article 1190
+Now at article 1191
+Now at article 1192
+Now at article 1193
+Now at article 1194
+Now at article 1195
+Now at article 1196
+Now at article 1197
+Now at article 1198
+Now at article 1199
+Now at article 1200
+Now at article 1201
+Now at article 1202
+Now at article 1203
+Now at article 1204
+Now at article 1205
+Now at article 1206
+Now at article 1207
+Now at article 1208
+Now at article 1209
+Now at article 1210
+Now at article 1211
+Now at article 1212
+Now at article 1213
+Now at article 1214
+Now at article 1215
+Now at article 1216
+Now at article 1217
+Now at article 1218
+Now at article 1219
+Now at article 1220
+Now at article 1221
+Now at article 1222
+Now at article 1223
+Now at article 1224
+Now at article 1225
+Now at article 1226
+Now at article 1227
+Now at article 1228
+Now at article 1229
+Now at article 1230
+Now at article 1231
+Now at article 1232
+Now at article 1233
+Now at article 1234
+Now at article 1235
+Now at article 1236
+Now at article 1237
+Now at article 1238
+Now at article 1239
+Now at article 1240
+Now at article 1241
+Now at article 1242
+Now at article 1243
+Now at article 1244
+Now at article 1245
+Now at article 1246
+Now at article 1247
+Now at article 1248
+Now at article 1249
+Now at article 1250
+Now at article 1251
+Now at article 1252
+Now at article 1253
+Now at article 1254
+Now at article 1255
+Now at article 1256
+Now at article 1257
+Now at article 1258
+Now at article 1259
+Now at article 1260
+Now at article 1261
+Now at article 1262
+Now at article 1263
+Now at article 1264
+Now at article 1265
+Now at article 1266
+Now at article 1267
+Now at article 1268
+Now at article 1269
+Now at article 1270
+Now at article 1271
+Now at article 1272
+Now at article 1273
+Now at article 1274
+Now at article 1275
+Now at article 1276
+Now at article 1277
+Now at article 1278
+Now at article 1279
+Now at article 1280
+Now at article 1281
+Now at article 1282
+Now at article 1283
+Now at article 1284
+Now at article 1285
+Now at article 1286
+Now at article 1287
+Now at article 1288
+Now at article 1289
+Now at article 1290
+Now at article 1291
+Now at article 1292
+Now at article 1293
+Now at article 1294
+Now at article 1295
+Now at article 1296
+Now at article 1297
+Now at article 1298
+Now at article 1299
+Now at article 1300
+Now at article 1301
+Now at article 1302
+Now at article 1303
+Now at article 1304
+Now at article 1305
+Now at article 1306
+Now at article 1307
+Now at article 1308
+Now at article 1309
+Now at article 1310
+Now at article 1311
+Now at article 1312
+Now at article 1313
+Now at article 1314
+Now at article 1315
+Now at article 1316
+Now at article 1317
+Now at article 1318
+Now at article 1319
+Now at article 1320
+Now at article 1321
+Now at article 1322
+Now at article 1323
+Now at article 1324
+Now at article 1325
+Now at article 1326
+Now at article 1327
+Now at article 1328
+Now at article 1329
+Now at article 1330
+Now at article 1331
+Now at article 1332
+Now at article 1333
+Now at article 1334
+Now at article 1335
+Now at article 1336
+Now at article 1337
+Now at article 1338
+Now at article 1339
+Now at article 1340
+Now at article 1341
+Now at article 1342
+Now at article 1343
+Now at article 1344
+Now at article 1345
+Now at article 1346
+Now at article 1347
+Now at article 1348
+Now at article 1349
+Now at article 1350
+Now at article 1351
+Now at article 1352
+Now at article 1353
+Now at article 1354
+Now at article 1355
+Now at article 1356
+Now at article 1357
+Now at article 1358
+Now at article 1359
+Now at article 1360
+Now at article 1361
+Now at article 1362
+Now at article 1363
+Now at article 1364
+Now at article 1365
+Now at article 1366
+Now at article 1367
+Now at article 1368
+Now at article 1369
+Now at article 1370
+Now at article 1371
+Now at article 1372
+Now at article 1373
+Now at article 1374
+Now at article 1375
+Now at article 1376
+Now at article 1377
+Now at article 1378
+Now at article 1379
+Now at article 1380
+Now at article 1381
+Now at article 1382
+Now at article 1383
+Now at article 1384
+Now at article 1385
+Now at article 1386
+Now at article 1387
+Now at article 1388
+Now at article 1389
+Now at article 1390
+Now at article 1391
+Now at article 1392
+Now at article 1393
+Now at article 1394
+Now at article 1395
+Now at article 1396
+Now at article 1397
+Now at article 1398
+Now at article 1399
+Now at article 1400
+Now at article 1401
+Now at article 1402
+Now at article 1403
+Now at article 1404
+Now at article 1405
+Now at article 1406
+Now at article 1407
+Now at article 1408
+Now at article 1409
+Now at article 1410
+Now at article 1411
+Now at article 1412
+Now at article 1413
+Now at article 1414
+Now at article 1415
+Now at article 1416
+Now at article 1417
+Now at article 1418
+Now at article 1419
+Now at article 1420
+Now at article 1421
+Now at article 1422
+Now at article 1423
+Now at article 1424
+Now at article 1425
+Now at article 1426
+Now at article 1427
+Now at article 1428
+Now at article 1429
+Now at article 1430
+Now at article 1431
+Now at article 1432
+Now at article 1433
+Now at article 1434
+Now at article 1435
+Now at article 1436
+Now at article 1437
+Now at article 1438
+Now at article 1439
+Now at article 1440
+Now at article 1441
+Now at article 1442
+Now at article 1443
+Now at article 1444
+Now at article 1445
+Now at article 1446
+Now at article 1447
+Now at article 1448
+Now at article 1449
+Now at article 1450
+Now at article 1451
+Now at article 1452
+Now at article 1453
+Now at article 1454
+Now at article 1455
+Now at article 1456
+Now at article 1457
+Now at article 1458
+Now at article 1459
+Now at article 1460
+Now at article 1461
+Now at article 1462
+Now at article 1463
+Now at article 1464
+Now at article 1465
+Now at article 1466
+Now at article 1467
+Now at article 1468
+Now at article 1469
+Now at article 1470
+Now at article 1471
+Now at article 1472
+Now at article 1473
+Now at article 1474
+Now at article 1475
+Now at article 1476
+Now at article 1477
+Now at article 1478
+Now at article 1479
+Now at article 1480
+Now at article 1481
+Now at article 1482
+Now at article 1483
+Now at article 1484
+Now at article 1485
+Now at article 1486
+Now at article 1487
+Now at article 1488
+Now at article 1489
+Now at article 1490
+Now at article 1491
+Now at article 1492
+Now at article 1493
+Now at article 1494
+Now at article 1495
+Now at article 1496
+Now at article 1497
+Now at article 1498
+Now at article 1499
+Now at article 1500
+Now at article 1501
+Now at article 1502
+Now at article 1503
+Now at article 1504
+Now at article 1505
+Now at article 1506
+Now at article 1507
+Now at article 1508
+Now at article 1509
+Now at article 1510
+Now at article 1511
+Now at article 1512
+Now at article 1513
+Now at article 1514
+Now at article 1515
+Now at article 1516
+Now at article 1517
+Now at article 1518
+Now at article 1519
+Now at article 1520
+Now at article 1521
+Now at article 1522
+Now at article 1523
+Now at article 1524
+Now at article 1525
+Now at article 1526
+Now at article 1527
+Now at article 1528
+Now at article 1529
+Now at article 1530
+Now at article 1531
+Now at article 1532
+Now at article 1533
+Now at article 1534
+Now at article 1535
+Now at article 1536
+Now at article 1537
+Now at article 1538
+Now at article 1539
+Now at article 1540
+Now at article 1541
+Now at article 1542
+Now at article 1543
+Now at article 1544
+Now at article 1545
+Now at article 1546
+Now at article 1547
+Now at article 1548
+Now at article 1549
+Now at article 1550
+Now at article 1551
+Now at article 1552
+Now at article 1553
+Now at article 1554
+Now at article 1555
+Now at article 1556
+Now at article 1557
+Now at article 1558
+Now at article 1559
+Now at article 1560
+Now at article 1561
+Now at article 1562
+Now at article 1563
+Now at article 1564
+Now at article 1565
+Now at article 1566
+Now at article 1567
+Now at article 1568
+Now at article 1569
+Now at article 1570
+Now at article 1571
+Now at article 1572
+Now at article 1573
+Now at article 1574
+Now at article 1575
+Now at article 1576
+Now at article 1577
+Now at article 1578
+Now at article 1579
+Now at article 1580
+Now at article 1581
+Now at article 1582
+Now at article 1583
+Now at article 1584
+Now at article 1585
+Now at article 1586
+Now at article 1587
+Now at article 1588
+Now at article 1589
+Now at article 1590
+Now at article 1591
+Now at article 1592
+Now at article 1593
+Now at article 1594
+Now at article 1595
+Now at article 1596
+Now at article 1597
+Now at article 1598
+Now at article 1599
+Now at article 1600
+Now at article 1601
+Now at article 1602
+Now at article 1603
+Now at article 1604
+Now at article 1605
+Now at article 1606
+Now at article 1607
+Now at article 1608
+Now at article 1609
+Now at article 1610
+Now at article 1611
+Now at article 1612
+Now at article 1613
+Now at article 1614
+Now at article 1615
+Now at article 1616
+Now at article 1617
+Now at article 1618
+Now at article 1619
+Now at article 1620
+Now at article 1621
+Now at article 1622
+Now at article 1623
+Now at article 1624
+Now at article 1625
+Now at article 1626
+Now at article 1627
+Now at article 1628
+Now at article 1629
+Now at article 1630
+Now at article 1631
+Now at article 1632
+Now at article 1633
+Now at article 1634
+Now at article 1635
+Now at article 1636
+Now at article 1637
+Now at article 1638
+Now at article 1639
+Now at article 1640
+Now at article 1641
+Now at article 1642
+Now at article 1643
+Now at article 1644
+Now at article 1645
+Now at article 1646
+Now at article 1647
+Now at article 1648
+Now at article 1649
+Now at article 1650
+Now at article 1651
+Now at article 1652
+Now at article 1653
+Now at article 1654
+Now at article 1655
+Now at article 1656
+Now at article 1657
+Now at article 1658
+Now at article 1659
+Now at article 1660
+Now at article 1661
+Now at article 1662
+Now at article 1663
+Now at article 1664
+Now at article 1665
+Now at article 1666
+Now at article 1667
+Now at article 1668
+Now at article 1669
+Now at article 1670
+Now at article 1671
+Now at article 1672
+Now at article 1673
+Now at article 1674
+Now at article 1675
+Now at article 1676
+Now at article 1677
+Now at article 1678
+Now at article 1679
+Now at article 1680
+Now at article 1681
+Now at article 1682
+Now at article 1683
+Now at article 1684
+Now at article 1685
+Now at article 1686
+Now at article 1687
+Now at article 1688
+Now at article 1689
+Now at article 1690
+Now at article 1691
+Now at article 1692
+Now at article 1693
+Now at article 1694
+Now at article 1695
+Now at article 1696
+Now at article 1697
+Now at article 1698
+Now at article 1699
+Now at article 1700
+Now at article 1701
+Now at article 1702
+Now at article 1703
+Now at article 1704
+Now at article 1705
+Now at article 1706
+Now at article 1707
+Now at article 1708
+Now at article 1709
+Now at article 1710
+Now at article 1711
+Now at article 1712
+Now at article 1713
+Now at article 1714
+Now at article 1715
+Now at article 1716
+Now at article 1717
+Now at article 1718
+Now at article 1719
+Now at article 1720
+Now at article 1721
+Now at article 1722
+Now at article 1723
+Now at article 1724
+Now at article 1725
+Now at article 1726
+Now at article 1727
+Now at article 1728
+Now at article 1729
+Now at article 1730
+Now at article 1731
+Now at article 1732
+Now at article 1733
+Now at article 1734
+Now at article 1735
+Now at article 1736
+Now at article 1737
+Now at article 1738
+Now at article 1739
+Now at article 1740
+Now at article 1741
+Now at article 1742
+Now at article 1743
+Now at article 1744
+Now at article 1745
+Now at article 1746
+Now at article 1747
+Now at article 1748
+Now at article 1749
+Now at article 1750
+Now at article 1751
+Now at article 1752
+Now at article 1753
+Now at article 1754
+Now at article 1755
+Now at article 1756
+Now at article 1757
+Now at article 1758
+Now at article 1759
+Now at article 1760
+Now at article 1761
+Now at article 1762
+Now at article 1763
+Now at article 1764
+Now at article 1765
+Now at article 1766
+Now at article 1767
+Now at article 1768
+Now at article 1769
+Now at article 1770
+Now at article 1771
+Now at article 1772
+Now at article 1773
+Now at article 1774
+Now at article 1775
+Now at article 1776
+Now at article 1777
+Now at article 1778
+Now at article 1779
+Now at article 1780
+Now at article 1781
+Now at article 1782
+Now at article 1783
+Now at article 1784
+Now at article 1785
+Now at article 1786
+Now at article 1787
+Now at article 1788
+Now at article 1789
+Now at article 1790
+Now at article 1791
+Now at article 1792
+Now at article 1793
+Now at article 1794
+Now at article 1795
+Now at article 1796
+Now at article 1797
+Now at article 1798
+Now at article 1799
+Now at article 1800
+Now at article 1801
+Now at article 1802
+Now at article 1803
+Now at article 1804
+Now at article 1805
+Now at article 1806
+Now at article 1807
+Now at article 1808
+Now at article 1809
+Now at article 1810
+Now at article 1811
+Now at article 1812
+Now at article 1813
+Now at article 1814
+Now at article 1815
+Now at article 1816
+Now at article 1817
+Now at article 1818
+Now at article 1819
+Now at article 1820
+Now at article 1821
+Now at article 1822
+Now at article 1823
+Now at article 1824
+Now at article 1825
+Now at article 1826
+Now at article 1827
+Now at article 1828
+Now at article 1829
+Now at article 1830
+Now at article 1831
+Now at article 1832
+Now at article 1833
+Now at article 1834
+Now at article 1835
+Now at article 1836
+Now at article 1837
+Now at article 1838
+Now at article 1839
+Now at article 1840
+Now at article 1841
+Now at article 1842
+Now at article 1843
+Now at article 1844
+Now at article 1845
+Now at article 1846
+Now at article 1847
+Now at article 1848
+Now at article 1849
+Now at article 1850
+Now at article 1851
+Now at article 1852
+Now at article 1853
+Now at article 1854
+Now at article 1855
+Now at article 1856
+Now at article 1857
+Now at article 1858
+Now at article 1859
+Now at article 1860
+Now at article 1861
+Now at article 1862
+Now at article 1863
+Now at article 1864
+Now at article 1865
+Now at article 1866
+Now at article 1867
+Now at article 1868
+Now at article 1869
+Now at article 1870
+Now at article 1871
+Now at article 1872
+Now at article 1873
+Now at article 1874
+Now at article 1875
+Now at article 1876
+Now at article 1877
+Now at article 1878
+Now at article 1879
+Now at article 1880
+Now at article 1881
+Now at article 1882
+Now at article 1883
+Now at article 1884
+Now at article 1885
+Now at article 1886
+Now at article 1887
+Now at article 1888
+Now at article 1889
+Now at article 1890
+Now at article 1891
+Now at article 1892
+Now at article 1893
+Now at article 1894
+Now at article 1895
+Now at article 1896
+Now at article 1897
+Now at article 1898
+Now at article 1899
+Now at article 1900
+Now at article 1901
+Now at article 1902
+Now at article 1903
+Now at article 1904
+Now at article 1905
+Now at article 1906
+Now at article 1907
+Now at article 1908
+Now at article 1909
+Now at article 1910
+Now at article 1911
+Now at article 1912
+Now at article 1913
+Now at article 1914
+Now at article 1915
+Now at article 1916
+Now at article 1917
+Now at article 1918
+Now at article 1919
+Now at article 1920
+Now at article 1921
+Now at article 1922
+Now at article 1923
+Now at article 1924
+Now at article 1925
+Now at article 1926
+Now at article 1927
+Now at article 1928
+Now at article 1929
+Now at article 1930
+Now at article 1931
+Now at article 1932
+Now at article 1933
+Now at article 1934
+Now at article 1935
+Now at article 1936
+Now at article 1937
+Now at article 1938
+Now at article 1939
+Now at article 1940
+Now at article 1941
+Now at article 1942
+Now at article 1943
+Now at article 1944
+Now at article 1945
+Now at article 1946
+Now at article 1947
+Now at article 1948
+Now at article 1949
+Now at article 1950
+Now at article 1951
+Now at article 1952
+Now at article 1953
+Now at article 1954
+Now at article 1955
+Now at article 1956
+Now at article 1957
+Now at article 1958
+Now at article 1959
+Now at article 1960
+Now at article 1961
+Now at article 1962
+Now at article 1963
+Now at article 1964
+Now at article 1965
+Now at article 1966
+Now at article 1967
+Now at article 1968
+Now at article 1969
+Now at article 1970
+Now at article 1971
+Now at article 1972
+Now at article 1973
+Now at article 1974
+Now at article 1975
+Now at article 1976
+Now at article 1977
+Now at article 1978
+Now at article 1979
+Now at article 1980
+Now at article 1981
+Now at article 1982
+Now at article 1983
+Now at article 1984
+Now at article 1985
+Now at article 1986
+Now at article 1987
+Now at article 1988
+Now at article 1989
+Now at article 1990
+Now at article 1991
+Now at article 1992
+Now at article 1993
+Now at article 1994
+Now at article 1995
+Now at article 1996
+Now at article 1997
+Now at article 1998
+Now at article 1999
+Now at article 2000
+Now at article 2001
+Now at article 2002
+Now at article 2003
+Now at article 2004
+Now at article 2005
+Now at article 2006
+Now at article 2007
+Now at article 2008
+Now at article 2009
+Now at article 2010
+Now at article 2011
+Now at article 2012
+Now at article 2013
+Now at article 2014
+Now at article 2015
+Now at article 2016
+Now at article 2017
+Now at article 2018
+Now at article 2019
+Now at article 2020
+Now at article 2021
+Now at article 2022
+Now at article 2023
+Now at article 2024
+Now at article 2025
+Now at article 2026
+Now at article 2027
+Now at article 2028
+Now at article 2029
+Now at article 2030
+Now at article 2031
+Now at article 2032
+Now at article 2033
+Now at article 2034
+Now at article 2035
+Now at article 2036
+Now at article 2037
+Now at article 2038
+Now at article 2039
+Now at article 2040
+Now at article 2041
+Now at article 2042
+Now at article 2043
+Now at article 2044
+Now at article 2045
+Now at article 2046
+Now at article 2047
+Now at article 2048
+Now at article 2049
+Now at article 2050
+Now at article 2051
+Now at article 2052
+Now at article 2053
+Now at article 2054
+Now at article 2055
+Now at article 2056
+Now at article 2057
+Now at article 2058
+Now at article 2059
+Now at article 2060
+Now at article 2061
+Now at article 2062
+Now at article 2063
+Now at article 2064
+Now at article 2065
+Now at article 2066
+Now at article 2067
+Now at article 2068
+Now at article 2069
+Now at article 2070
+Now at article 2071
+Now at article 2072
+Now at article 2073
+Now at article 2074
+Now at article 2075
+Now at article 2076
+Now at article 2077
+Now at article 2078
+Now at article 2079
+Now at article 2080
+Now at article 2081
+Now at article 2082
+Now at article 2083
+Now at article 2084
+Now at article 2085
+Now at article 2086
+Now at article 2087
+Now at article 2088
+Now at article 2089
+Now at article 2090
+Now at article 2091
+Now at article 2092
+Now at article 2093
+Now at article 2094
+Now at article 2095
+Now at article 2096
+Now at article 2097
+Now at article 2098
+Now at article 2099
+Now at article 2100
+Now at article 2101
+Now at article 2102
+Now at article 2103
+Now at article 2104
+Now at article 2105
+Now at article 2106
+Now at article 2107
+Now at article 2108
+Now at article 2109
+Now at article 2110
+Now at article 2111
+Now at article 2112
+Now at article 2113
+Now at article 2114
+Now at article 2115
+Now at article 2116
+Now at article 2117
+Now at article 2118
+Now at article 2119
+Now at article 2120
+Now at article 2121
+Now at article 2122
+Now at article 2123
+Now at article 2124
+Now at article 2125
+Now at article 2126
+Now at article 2127
+Now at article 2128
+Now at article 2129
+Now at article 2130
+Now at article 2131
+Now at article 2132
+Now at article 2133
+Now at article 2134
+Now at article 2135
+Now at article 2136
+Now at article 2137
+Now at article 2138
+Now at article 2139
+Now at article 2140
+Now at article 2141
+Now at article 2142
+Now at article 2143
+Now at article 2144
+Now at article 2145
+Now at article 2146
+Now at article 2147
+Now at article 2148
+Now at article 2149
+Now at article 2150
+Now at article 2151
+Now at article 2152
+Now at article 2153
+Now at article 2154
+Now at article 2155
+Now at article 2156
+Now at article 2157
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-column-in-dataframe-to-store-results">Create column in dataframe to store results<a class="anchor-link" href="#Create-column-in-dataframe-to-store-results">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [26]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'translatedEN'</span><span class="p">]</span> <span class="o">=</span> <span class="n">translatedEN</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [27]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[27]:</div>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Title</th>
+<th>Translator</th>
+<th>articleCH</th>
+<th>articleEN</th>
+<th>url</th>
+<th>translatedEN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Egg of extinct elephant bird was mislabeled as...</td>
+<td>劉宜庭</td>
+<td>紐約水牛城的一座博物館最近發現，它的收藏品中有一顆罕見的象鳥蛋，數十年來一直被誤認為模型。水...</td>
+<td>A museum in Buffalo, N.Y., recently discovered...</td>
+<td>http://iservice.ltn.com.tw/Service/english/eng...</td>
+<td>A museum in Buffalo, New York, recently discov...</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Korean reconciliation hopes boost DMZ tours－兩韓...</td>
+<td>茅毅</td>
+<td>在兩韓之間持續求和下，（南韓）地方政府正沿著北韓邊界一帶推動「和平主題」觀光。和南、北韓非軍...</td>
+<td>Local governments are promoting "peace-themed"...</td>
+<td>http://iservice.ltn.com.tw/Service/english/eng...</td>
+<td>Under the continuous rapprochement between the...</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Spain horse whisperer’s animals mirror stress ...</td>
+<td>周虹汶</td>
+<td>在馬德里外圍的瓜達利斯山裡，阿根廷馴馬師費爾南多．諾瓦耶斯出動他的動物，來幫助蒙受壓力與焦慮...</td>
+<td>In the Guadalix mountains outside Madrid, Arge...</td>
+<td>http://iservice.ltn.com.tw/Service/english/eng...</td>
+<td>In the Guadalís Mountains outside Madrid, Fern...</td>
+</tr>
+<tr>
+<th>3</th>
+<td>A school catches flak for telling girls they c...</td>
+<td>張沛元</td>
+<td>（美國）猶他州歐格登的坎斯維爾小學每年西洋情人節當天都會舉行小六生舞會，藉此鼓勵學童融入與和...</td>
+<td>Kanesville Elementary School in Ogden, Utah, h...</td>
+<td>http://iservice.ltn.com.tw/Service/english/eng...</td>
+<td>(USA) The Cansville Elementary School in Ogden...</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Iran acid attack victims find new identity in ...</td>
+<td>孫宇青</td>
+<td>瑪索梅．阿堤被公公朝臉上潑酸而失明，但她不想只因為曾遭到邪惡對待，而被人們記住。她想成為一名...</td>
+<td>Massoumeh Attaie does not want to be defined o...</td>
+<td>http://iservice.ltn.com.tw/Service/english/eng...</td>
+<td>Marsomer. Adi was blinded by his father-in-law...</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+    </div>
+
+    <footer>
+        <div class="tags">
+            <a href="https://shaynemei.github.io/hackore/tag/python-gcloud-translation.html">python gcloud translation</a>
+        </div>
+        <div class="pure-g post-footer">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="pure-g poster-info">
+                    <div class="pure-u-3-4">
+                        <h3 class="author-name"><a href="https://shaynemei.github.io/hackore/author/shayne.html">Shayne</a></h3>
+                        <p class="author-description">
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </footer>
+
+    <div class="entry-content">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'Hackore';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+</div>
+
+
+</body>
+</html>
