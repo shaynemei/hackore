@@ -1,63 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-        <title>Preprocessing - Feature Scaling</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="https://shaynemei.github.io/hackore/theme/css/main.css" />
-        <link href="https://shaynemei.github.io/hackore/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Full Atom Feed" />
-        <link href="https://shaynemei.github.io/hackore/feeds/notes.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Categories Atom Feed" />
-</head>
-<body>
 
-    <div class="main-nav-container">
+<!DOCTYPE HTML>
+<!--
+	Dopetrope 2.0 by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+			<title>Hackore</title>
+			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+			<meta charset="utf-8" />
+			<link href="https://shaynemei.github.io/hackore/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Full Atom Feed" />
+			<link href="https://shaynemei.github.io/hackore/feeds/notes.atom.xml" type="application/atom+xml" rel="alternate" title="Hackore Categories Atom Feed" />
+			<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,900,300italic" rel="stylesheet" />
+				<link rel="stylesheet" href="/theme/css/pygment.css" />
+			<noscript>
+				<link rel="stylesheet" href="/theme/css/skel-noscript.css" />
+				<link rel="stylesheet" href="/theme/css/style.css" />
+				<link rel="stylesheet" href="/theme/css/style-desktop.css" />
+			</noscript>
+	</head>
+	<body class="no-sidebar">
+		<!-- Header Wrapper -->
+			<div id="header-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="12u">
+						
+							<!-- Header -->
+								<section id="header">
+									
+									<!-- Logo -->
+									<h1><a href="https://shaynemei.github.io/hackore/">Hackore</a></h1>
+									
+									<!-- Nav -->
+										<nav id="nav">
+											<ul>
+											</ul>
+										</nav>
 
-        <div class="pure-g">
-            <div class="pure-u-1 pure-u-lg-2-3">
-                <div class="main-nav">
-                    <ul class="main-nav-list">
-                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/" class="pure-menu-link">Hackore</a></li>
+								</section>
 
-                        <li class="main-nav-item active"><a href="https://shaynemei.github.io/hackore/category/notes.html" class="pure-menu-link">Notes</a></li>
-                        <li class="main-nav-item"><a href="https://shaynemei.github.io/hackore/category/project-code.html" class="pure-menu-link">Project Code</a></li>
-                    </ul>
-                </div>
-             </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		<!-- Main Wrapper -->
+			<div id="main-wrapper">
+				<div class="container">
+<div class="row">
+	<div class="12u">
+			<section>
+				<div>
+					<div class="row">
+						<div class="12u skel-cell-mainContent">
+							<!-- Content -->
+								<article class="box is-post">
+									<div class="post-infos">
+										<ul class="tags">
+											<li><a class="button" href="category/notes.html">Notes</a></li>
+												<li><a class="button button-alt" href="tag/python.html">Python</a></li>
 
-             <div class="pure-u-1 pure-u-lg-1-3"></div>
-        </div>
+												<li><a class="button button-alt" href="tag/machine-learning.html">Machine learning</a></li>
 
-    </div>
+												<li><a class="button button-alt" href="tag/data-science.html">Data science</a></li>
 
+										</ul>
+									</div>
 
-<div class="page-container">
-    <div class="entry-content">
-        <div class="post-meta pure-g">
-            <div class="pure-u-3-4 meta-data">
-                <a href="https://shaynemei.github.io/hackore/category/notes.html" class="category">Notes</a><br />
-
-                <a class="author" href="https://shaynemei.github.io/hackore/author/shayne.html">Shayne</a>
-                &mdash; <abbr title="2018-06-14T16:50:00+08:00">Thu 14 June 2018</abbr>
-            </div>
-        </div>
-    </div>
-
-    <div class="article-header-container">
-        <div class="background-image-container">
-
-            <div class="background-image-small">
-                <div class="title-container">
-                    <h1>Preprocessing - Feature Scaling</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="entry-content">
-        <style type="text/css">/*!
+									<div class="pennant pennant-alt date">2018-06-14</div>
+									<h2>Preprocessing - Feature Scaling</h2>
+									<style type="text/css">/*!
 *
 * IPython notebook
 *
@@ -1079,47 +1093,104 @@ h6:hover .anchor-link {
 }
 </script>
 
-    </div>
-
-    <footer>
-        <div class="tags">
-            <a href="https://shaynemei.github.io/hackore/tag/python.html">python</a>
-            <a href="https://shaynemei.github.io/hackore/tag/machine-learning.html">machine learning</a>
-            <a href="https://shaynemei.github.io/hackore/tag/data-science.html">data science</a>
-        </div>
-        <div class="pure-g post-footer">
-            <div class="pure-u-1 pure-u-md-1-2">
-                <div class="pure-g poster-info">
-                    <div class="pure-u-3-4">
-                        <h3 class="author-name"><a href="https://shaynemei.github.io/hackore/author/shayne.html">Shayne</a></h3>
-                        <p class="author-description">
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-
-        </div>
-
-
-    </footer>
-
-    <div class="entry-content">
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            var disqus_shortname = 'Hackore';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    </div>
-
+								</article>
+ <div id="disqus_thread" class="box"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'Hackore';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+						</div>
+					</div>
+				</div>
+			</section>
+	</div>
 </div>
 
+				</div>
+			</div>
 
-</body>
+		<!-- Footer Wrapper -->
+			<div id="footer-wrapper">
+				<!-- Footer -->
+					<section id="footer" class="container">
+						<div class="row">
+							<div class="8u">
+								<section>
+									<header>
+										<h2>Latest articles</h2>
+									</header>
+									<ul class="dates">
+										<li>
+											<span class="date">Jun <strong>14</strong></span>
+											<h3><a href="preprocessing.html">Preprocessing - Feature Scaling</a></h3>
+											<p><p>Introduction to some of the more common feature scaling schemes which are important in preprocessing data.</p></p>
+										</li>
+										<li>
+											<span class="date">Jun <strong>14</strong></span>
+											<h3><a href="pca.html">PCA Dimensionality Reduction</a></h3>
+											<p><p>An unsupervised learning technique that reduces the dimensionality of your datasets.</p></p>
+										</li>
+										<li>
+											<span class="date">Jun <strong>14</strong></span>
+											<h3><a href="linear_regression.html">Linear Regression</a></h3>
+											<p><p>A supervised learning technique to interpolate or extrapolate your datasets with linear relations.</p></p>
+										</li>
+										<li>
+											<span class="date">Jun <strong>14</strong></span>
+											<h3><a href="isomap.html">Isomap Dimensionality Reduction</a></h3>
+											<p><p>An unsupervised learning technique that reduces the dimensionality of your datasets.</p></p>
+										</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+						<div class="row">
+							<div class="4u">
+								<section>
+									<header>
+										<h2>Blogroll</h2>
+									</header>
+									<ul class="divided">
+											<li><a href="https://www.nltk.org">NLTK</a></li>
+											<li><a href="http://getpelican.com/">Pelican</a></li>
+											<li><a href="http://python.org/">Python.org</a></li>
+											<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="4u">
+								<section>
+									<header>
+										<h2>Categories</h2>
+									</header>
+									<ul class="divided">
+											<li><a href="https://shaynemei.github.io/hackore/category/notes.html">Notes</a></li>
+											<li><a href="https://shaynemei.github.io/hackore/category/project-code.html">Project Code</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="4u">
+							
+								<section>
+									<header>
+										<h2>Contact</h2>
+									</header>
+									<ul class="social">
+									</ul>
+								</section>
+							</div>
+						</div>
+					</section>
+			</div>
+		<script src="/theme/js/jquery.min.js"></script>
+		<script src="/theme/js/jquery.dropotron.js"></script>
+		<script src="/theme/js/config.js"></script>
+		<script src="/theme/js/skel.min.js"></script>
+		<script src="/theme/js/skel-panels.min.js"></script>
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><link rel="stylesheet" href="/theme/css/ie8.css" /><![endif]-->
+	</body>
 </html>
