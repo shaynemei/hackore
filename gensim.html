@@ -1067,7 +1067,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [1]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1089,25 +1089,10 @@ h6:hover .anchor-link {
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[nltk_data] Downloading package stopwords to
-[nltk_data]     /Users/Shayne/nltk_data...
-[nltk_data]   Package stopwords is already up-to-date!
-[nltk_data] Downloading package punkt to /Users/Shayne/nltk_data...
-[nltk_data]   Package punkt is already up-to-date!
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [2]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">'PATH TO FILE'</span><span class="p">)</span>
@@ -1124,7 +1109,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [6]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">documents1D</span> <span class="o">=</span> <span class="n">documents</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -1136,7 +1121,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [8]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'tokenizers/punkt/english.pickle'</span><span class="p">)</span>
@@ -1151,21 +1136,11 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [9]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_flat</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[9]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>14518</pre>
-</div>
 </div>
 </div>
 </div>
@@ -1328,7 +1303,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [4]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">documents_tr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">'translatedEN'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span>
@@ -1346,7 +1321,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [17]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Save tokenised data to txt</span>
@@ -1360,7 +1335,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [20]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Save tokenised data to csv</span>
@@ -1373,7 +1348,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [12]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_flat</span><span class="p">)</span>
@@ -1381,20 +1356,10 @@ h6:hover .anchor-link {
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[12]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>14518</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [23]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_translated</span><span class="p">)</span>
@@ -1402,20 +1367,10 @@ h6:hover .anchor-link {
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[23]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>26102</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [22]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">queryLen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_translated</span><span class="p">)</span>
@@ -1426,7 +1381,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [14]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load corpus</span>
@@ -1441,34 +1396,10 @@ h6:hover .anchor-link {
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>2018-06-09 21:41:00,252 : INFO : loaded corpus index from corpus.mm.index
-2018-06-09 21:41:00,255 : INFO : initializing cython corpus reader from corpus.mm
-2018-06-09 21:41:00,296 : INFO : accepted corpus with 14484 documents, 22163 features, 239463 non-zero entries
-2018-06-09 21:41:00,297 : INFO : loading Dictionary object from corpus.dict
-2018-06-09 21:41:00,338 : INFO : loaded corpus.dict
-2018-06-09 21:41:00,340 : INFO : loading LsiModel object from model.lsi
-2018-06-09 21:41:00,385 : INFO : loading id2word recursively from model.lsi.id2word.* with mmap=None
-2018-06-09 21:41:00,386 : INFO : setting ignored attribute projection to None
-2018-06-09 21:41:00,388 : INFO : setting ignored attribute dispatcher to None
-2018-06-09 21:41:00,390 : INFO : loaded model.lsi
-2018-06-09 21:41:00,391 : INFO : loading LsiModel object from model.lsi.projection
-2018-06-09 21:41:00,600 : INFO : loaded model.lsi.projection
-2018-06-09 21:41:00,601 : INFO : loading MatrixSimilarity object from corpus.index
-2018-06-09 21:41:00,699 : INFO : loaded corpus.index
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [25]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sims_all</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1486,73 +1417,10 @@ h6:hover .anchor-link {
 </div>
 </div>
 </div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Completed 500 lines! Hooray!!!! 26102 more lines to go!
-Completed 500 lines! Hooray!!!! 25602 more lines to go!
-Completed 500 lines! Hooray!!!! 25102 more lines to go!
-Completed 500 lines! Hooray!!!! 24602 more lines to go!
-Completed 500 lines! Hooray!!!! 24102 more lines to go!
-Completed 500 lines! Hooray!!!! 23602 more lines to go!
-Completed 500 lines! Hooray!!!! 23102 more lines to go!
-Completed 500 lines! Hooray!!!! 22602 more lines to go!
-Completed 500 lines! Hooray!!!! 22102 more lines to go!
-Completed 500 lines! Hooray!!!! 21602 more lines to go!
-Completed 500 lines! Hooray!!!! 21102 more lines to go!
-Completed 500 lines! Hooray!!!! 20602 more lines to go!
-Completed 500 lines! Hooray!!!! 20102 more lines to go!
-Completed 500 lines! Hooray!!!! 19602 more lines to go!
-Completed 500 lines! Hooray!!!! 19102 more lines to go!
-Completed 500 lines! Hooray!!!! 18602 more lines to go!
-Completed 500 lines! Hooray!!!! 18102 more lines to go!
-Completed 500 lines! Hooray!!!! 17602 more lines to go!
-Completed 500 lines! Hooray!!!! 17102 more lines to go!
-Completed 500 lines! Hooray!!!! 16602 more lines to go!
-Completed 500 lines! Hooray!!!! 16102 more lines to go!
-Completed 500 lines! Hooray!!!! 15602 more lines to go!
-Completed 500 lines! Hooray!!!! 15102 more lines to go!
-Completed 500 lines! Hooray!!!! 14602 more lines to go!
-Completed 500 lines! Hooray!!!! 14102 more lines to go!
-Completed 500 lines! Hooray!!!! 13602 more lines to go!
-Completed 500 lines! Hooray!!!! 13102 more lines to go!
-Completed 500 lines! Hooray!!!! 12602 more lines to go!
-Completed 500 lines! Hooray!!!! 12102 more lines to go!
-Completed 500 lines! Hooray!!!! 11602 more lines to go!
-Completed 500 lines! Hooray!!!! 11102 more lines to go!
-Completed 500 lines! Hooray!!!! 10602 more lines to go!
-Completed 500 lines! Hooray!!!! 10102 more lines to go!
-Completed 500 lines! Hooray!!!! 9602 more lines to go!
-Completed 500 lines! Hooray!!!! 9102 more lines to go!
-Completed 500 lines! Hooray!!!! 8602 more lines to go!
-Completed 500 lines! Hooray!!!! 8102 more lines to go!
-Completed 500 lines! Hooray!!!! 7602 more lines to go!
-Completed 500 lines! Hooray!!!! 7102 more lines to go!
-Completed 500 lines! Hooray!!!! 6602 more lines to go!
-Completed 500 lines! Hooray!!!! 6102 more lines to go!
-Completed 500 lines! Hooray!!!! 5602 more lines to go!
-Completed 500 lines! Hooray!!!! 5102 more lines to go!
-Completed 500 lines! Hooray!!!! 4602 more lines to go!
-Completed 500 lines! Hooray!!!! 4102 more lines to go!
-Completed 500 lines! Hooray!!!! 3602 more lines to go!
-Completed 500 lines! Hooray!!!! 3102 more lines to go!
-Completed 500 lines! Hooray!!!! 2602 more lines to go!
-Completed 500 lines! Hooray!!!! 2102 more lines to go!
-Completed 500 lines! Hooray!!!! 1602 more lines to go!
-Completed 500 lines! Hooray!!!! 1102 more lines to go!
-Completed 500 lines! Hooray!!!! 602 more lines to go!
-Completed 500 lines! Hooray!!!! 102 more lines to go!
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [28]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Save tokenised data to csv</span>
