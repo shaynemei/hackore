@@ -22,24 +22,24 @@
 
 
 <meta name="author" content="Shayne" />
-<meta name="description" content="Collecting corpora for a translation project." />
+<meta name="description" content="Collecting different movie title translations of China, Hong Kong, and Taiwan from wiki, using movie lists from IMDb." />
 <meta name="keywords" content="python, webscraping, bs4">
 <meta property="og:site_name" content="Hackore"/>
-<meta property="og:title" content="Scraping Liberty Times Net"/>
-<meta property="og:description" content="Collecting corpora for a translation project."/>
+<meta property="og:title" content="Scraping IMDb and Wiki"/>
+<meta property="og:description" content="Collecting different movie title translations of China, Hong Kong, and Taiwan from wiki, using movie lists from IMDb."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://shaynemei.github.io/hackore/scrape_ltn.html"/>
+<meta property="og:url" content="https://shaynemei.github.io/hackore/scrape_imdb_wiki.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2018-06-14 15:30:00+08:00"/>
+<meta property="article:published_time" content="2018-06-22 14:00:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="https://shaynemei.github.io/hackore/author/shayne.html">
-<meta property="article:section" content="Project Code"/>
+<meta property="article:section" content="Notes"/>
 <meta property="article:tag" content="python"/>
 <meta property="article:tag" content="webscraping"/>
 <meta property="article:tag" content="bs4"/>
 <meta property="og:image" content="">
 
-  <title>Hackore &ndash; Scraping Liberty Times Net</title>
+  <title>Hackore &ndash; Scraping IMDb and Wiki</title>
 
 </head>
 <body>
@@ -75,9 +75,9 @@
 
 <article class="single">
   <header>
-    <h1 id="scrape_ltn">Scraping Liberty Times Net</h1>
+    <h1 id="scrape_imdb_wiki">Scraping IMDb and Wiki</h1>
     <p>
-          Posted on Thu 14 June 2018 in <a href="https://shaynemei.github.io/hackore/category/project-code.html">Project Code</a>
+          Posted on Fri 22 June 2018 in <a href="https://shaynemei.github.io/hackore/category/notes.html">Notes</a>
 
 
     </p>
@@ -1061,8 +1061,21 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Web-Scraping--LTN">Web Scraping -LTN<a class="anchor-link" href="#Web-Scraping--LTN">¶</a></h2><p>This is the python web scraping code I've written to collect corpora for a translation project.<br/>
-Disclaimer: the results are for non-profit student research only.</p>
+<h2 id="Web-Scraping---IMDb,-Wiki">Web Scraping - IMDb, Wiki<a class="anchor-link" href="#Web-Scraping---IMDb,-Wiki">¶</a></h2><p>This is written to collect data for my friend's translation project, in which she attempts to analyse the differences between the official movie title translations in China, Hong Kong and Taiwan.</p>
+<h3 id="Learnings:">Learnings:<a class="anchor-link" href="#Learnings:">¶</a></h3><ul>
+<li><code>find()</code> and <code>find_all()</code> only works on <code>bs4.BeautifulSoup</code> or <code>bs4.element.Tags</code></li>
+<li><code>bs4.element.Resultset</code> can simply be treated as a list of <code>bs4.element.Tags</code></li>
+</ul>
+<h3 id="Challenges:">Challenges:<a class="anchor-link" href="#Challenges:">¶</a></h3><ol>
+<li>Directing to the correct Wiki page of the movie.</li>
+<li>The tag containing title translations are elements in a table without distinguishing features.</li>
+</ol>
+<h4 id="Sol-1">Sol 1<a class="anchor-link" href="#Sol-1">¶</a></h4><p>Using <code>try except</code>, first try the <code>_(film)</code> labeled url. For cases where there are multiple entries of this movie title, this would direct us to the correct movie page. If there is only one entry (the film one), this url would be redirected to an error page which would produce errors in the following bs4 scraping code. Handle this exceptiong with a normal url with the appended title.</p>
+<h4 id="Sol-2">Sol 2<a class="anchor-link" href="#Sol-2">¶</a></h4><p>After a few observations, the translation elements seemed to always be at the very last three slots of the table. A simple backward indexing did the trick.</p>
+<h3 id="Limitations:">Limitations:<a class="anchor-link" href="#Limitations:">¶</a></h3><ol>
+<li>Failed to consider instances where there are multiple versions of a movie, in which case, the correct url would be appended with <code>_(year_film)</code>.</li>
+<li>Following the first bug, since we are using simple indexing to retrieve text instead of bs4, irrelavant text (whatever the last three table elements are) would be appended to the results in lieu of the 'null' marker we applied for other exceptions. This has created multiple entries with erroneous translations and couldn't be removed along with the others that are correctly marked with 'null'.</li>
+</ol>
 </div>
 </div>
 </div>
@@ -1075,6 +1088,7 @@ Disclaimer: the results are for non-profit student research only.</p>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">openpyxl</span> <span class="k">import</span> <span class="n">load_workbook</span>
 </pre></div>
 </div>
 </div>
@@ -1085,134 +1099,18 @@ Disclaimer: the results are for non-profit student research only.</p>
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define a helper function to remove all occurences of a certain value from a list</span>
-<span class="k">def</span> <span class="nf">remove_values_from_list</span><span class="p">(</span><span class="n">the_list</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-   <span class="k">return</span> <span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">the_list</span> <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">val</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>First loop through n pages and get all the links to every article.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the links to every article up to page n</span>
-<span class="k">def</span> <span class="nf">getLinks</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    
-    <span class="c1"># Start at page 1</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s1">'http://iservice.ltn.com.tw/Service/english/index.php?page=1'</span>
-    
-    <span class="c1"># Main list with all links to return</span>
-    <span class="n">links_all</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="c1"># Loop through pages till page n</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'div'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'content_english'</span><span class="p">)</span>
-        
-        <span class="c1"># Select links and store them in a list</span>
-        <span class="n">links_res</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span>
-        <span class="n">links_temp</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">links_res</span><span class="p">:</span> 
-            <span class="n">links_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">'href'</span><span class="p">])</span>
-        <span class="k">del</span> <span class="n">links_temp</span><span class="p">[</span><span class="mi">10</span><span class="p">:]</span>
-
-        <span class="c1"># Concat proper full url</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links_temp</span><span class="p">):</span>
-            <span class="n">links_temp</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'http://iservice.ltn.com.tw/Service/english/'</span> <span class="o">+</span> <span class="n">val</span>
-        
-        <span class="c1"># Append to main list</span>
-        <span class="n">links_all</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">links_temp</span><span class="p">)</span>
-        
-        <span class="c1"># Update path to next page</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span>
-        
-    <span class="k">return</span> <span class="n">links_all</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>For each link, extract the article and separate the English part and the Chinese part.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get all information we want from an article</span>
-<span class="k">def</span> <span class="nf">extractContent</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Scrape IMDB for list of movie titles</span>
+<span class="k">def</span> <span class="nf">getTitles</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
     <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'h3'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'lister-item-header'</span><span class="p">)</span>
 
-    <span class="c1"># Get title</span>
-    <span class="k">try</span><span class="p">:</span> 
-        <span class="n">title</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'h2'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'title'</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[</span><span class="mi">9</span><span class="p">:]</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="s1">'null'</span>
-    
-    <span class="c1"># Append all content into a list</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">content_raw</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">'newsContent'</span><span class="p">)</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">content_raw</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'p'</span><span class="p">)</span>
-        <span class="n">article</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
-            <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\r\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
-            <span class="n">article</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">article</span> <span class="o">=</span> <span class="n">remove_values_from_list</span><span class="p">(</span><span class="n">article</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
-
-        <span class="c1"># Get name of translator</span>
-        <span class="n">translator</span> <span class="o">=</span> <span class="n">article</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">translator</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">'◎'</span> <span class="ow">or</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">' '</span><span class="p">:</span>
-                <span class="n">translator</span> <span class="o">=</span> <span class="n">translator</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span>
-
-        <span class="c1"># Get rid of translator and dictionary</span>
-        <span class="k">del</span> <span class="n">article</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">article</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span>
-
-        <span class="c1"># Separate article into EN and CH</span>
-        <span class="n">articleEN</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">articleCH</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">article</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">idx</span><span class="o">%</span><span class="k">2</span> == 0:
-                <span class="n">articleEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">articleCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">translator</span> <span class="o">=</span> <span class="s1">'null'</span>
-        <span class="n">articleEN</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'null'</span><span class="p">]</span>
-        <span class="n">articleCH</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'null'</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">title</span><span class="p">,</span> <span class="n">translator</span><span class="p">,</span> <span class="n">articleEN</span><span class="p">,</span> <span class="n">articleCH</span>
+    <span class="n">titles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+        <span class="n">titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">titles</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Execute, store results in a pandas dataframe, and save as an excel file.</p>
 </div>
 </div>
 </div>
@@ -1221,41 +1119,120 @@ Disclaimer: the results are for non-profit student research only.</p>
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Main code</span>
-
-<span class="n">links</span> <span class="o">=</span> <span class="n">getLinks</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
-<span class="n">title</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">translator</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">articleEN</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">articleCH</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">url</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">((</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">10</span>) == 0:
-        <span class="nb">print</span><span class="p">(</span><span class="s1">'Now on page '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">)))</span>
-    <span class="n">title_temp</span><span class="p">,</span> <span class="n">translator_temp</span><span class="p">,</span> <span class="n">articleEN_temp</span><span class="p">,</span> <span class="n">articleCH_temp</span> <span class="o">=</span> <span class="n">extractContent</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-    <span class="n">title</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title_temp</span><span class="p">)</span>
-    <span class="n">translator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">translator_temp</span><span class="p">)</span>
-    <span class="n">articleEN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">articleEN_temp</span><span class="p">)</span>
-    <span class="n">articleCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">articleCH_temp</span><span class="p">)</span>
-    <span class="n">url</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-
-<span class="c1"># Store results in pandas.DataFrame</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="s1">'Title'</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
-        <span class="s1">'Translator'</span><span class="p">:</span> <span class="n">translator</span><span class="p">,</span>
-        <span class="s1">'articleEN'</span><span class="p">:</span> <span class="n">articleEN</span><span class="p">,</span>
-        <span class="s1">'articleCH'</span><span class="p">:</span> <span class="n">articleCH</span><span class="p">,</span>
-        <span class="s1">'url'</span><span class="p">:</span> <span class="n">url</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Find ZH wiki page link to each movie title</span>
+<span class="k">def</span> <span class="nf">getLinks</span><span class="p">(</span><span class="n">titles</span><span class="p">):</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">titles</span><span class="p">):</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="s1">'_'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Now processing title number'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="s1">'https://en.wikipedia.org/wiki/'</span> <span class="o">+</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">'_(film)'</span>
+                <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
+                <span class="n">li</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'li'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'interlanguage-link interwiki-zh'</span><span class="p">)</span>
+                <span class="n">lin</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span>
+                <span class="n">link</span> <span class="o">=</span> <span class="n">lin</span><span class="p">[</span><span class="s1">'href'</span><span class="p">]</span>
+                <span class="n">links</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="s1">'https://en.wikipedia.org/wiki/'</span> <span class="o">+</span> <span class="n">title</span>
+                <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
+                <span class="n">li</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'li'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'interlanguage-link interwiki-zh'</span><span class="p">)</span>
+                <span class="n">lin</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span>
+                <span class="n">link</span> <span class="o">=</span> <span class="n">lin</span><span class="p">[</span><span class="s1">'href'</span><span class="p">]</span>
+                <span class="n">links</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">links</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'404'</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'Not Found.'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">links</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get 3 translated titles of China, Hong Kong and Taiwan:</span>
+<span class="k">def</span> <span class="nf">getTranslation</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
+    <span class="n">titlesCH</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">titlesHK</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">titlesTW</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">'html.parser'</span><span class="p">)</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'table'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'infobox vevent'</span><span class="p">)</span>
+            <span class="n">td</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">'td'</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
+            <span class="n">titlesCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+            <span class="n">titlesHK</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+            <span class="n">titlesTW</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">titlesCH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'null'</span><span class="p">)</span>
+            <span class="n">titlesHK</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'null'</span><span class="p">)</span>
+            <span class="n">titlesTW</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'null'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">titlesCH</span><span class="p">,</span> <span class="n">titlesHK</span><span class="p">,</span> <span class="n">titlesTW</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">imdbPath</span> <span class="o">=</span> <span class="s1">'https://www.imdb.com/search/title?year=2016&amp;title_type=feature&amp;sort=num_votes,desc&amp;page=4&amp;ref_=adv_nxt'</span>
+<span class="n">titles</span> <span class="o">=</span> <span class="n">getTitles</span><span class="p">(</span><span class="n">imdbPath</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">links</span> <span class="o">=</span> <span class="n">getLinks</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">titlesCH</span><span class="p">,</span> <span class="n">titlesHK</span><span class="p">,</span> <span class="n">titlesTW</span> <span class="o">=</span> <span class="n">getTranslation</span><span class="p">(</span><span class="n">links</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'TitlesEN'</span><span class="p">:</span> <span class="n">titles</span><span class="p">,</span>
+    <span class="s1">'TitlesCH'</span><span class="p">:</span> <span class="n">titlesCH</span><span class="p">,</span>
+    <span class="s1">'TitlesHK'</span><span class="p">:</span> <span class="n">titlesHK</span><span class="p">,</span>
+    <span class="s1">'TitlesTW'</span><span class="p">:</span> <span class="n">titlesTW</span><span class="p">,</span>
+    <span class="s1">'wikiZH'</span><span class="p">:</span> <span class="n">links</span>
 <span class="p">})</span>
 
-<span class="c1"># Create a Pandas Excel writer using XlsxWriter as the engine.</span>
-<span class="n">writer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="s1">'liberty_results.xlsx'</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'xlsxwriter'</span><span class="p">)</span>
-
-<span class="c1"># Convert the dataframe to an XlsxWriter Excel object.</span>
-<span class="n">results</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'1-300'</span><span class="p">)</span>
-
-<span class="c1"># Close the Pandas Excel writer and output the Excel file.</span>
-<span class="n">writer</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="c1"># Write to an existing excel file and create new sheet</span>
+<span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="s1">'final.xlsx'</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'openpyxl'</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">book</span> <span class="o">=</span> <span class="n">load_workbook</span><span class="p">(</span><span class="s1">'final.xlsx'</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">'2016_p4'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
