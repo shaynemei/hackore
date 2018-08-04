@@ -3085,9 +3085,9 @@ h6:hover .anchor-link {
 &lt;li&gt;How configurable you need your model to be&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="Scikit-learn"&gt;Scikit learn&lt;a class="anchor-link" href="#Scikit-learn"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html"&gt;Scikit-learn ML Cheat Sheet&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="title" src="img/Scikit-learn ML Cheat Sheet.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="title" src="img/sklearnML_cheatsheet.png"/&gt;&lt;/p&gt;
 &lt;h2 id="Microsoft-Azure"&gt;Microsoft Azure&lt;a class="anchor-link" href="#Microsoft-Azure"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/machine-learning/studio/algorithm-choice"&gt;Microsoft Azure ML Algorithm Cheat Sheet Article&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="title" src="img/Microsoft Azure ML Cheat Sheet.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="title" src="img/azureML_cheatsheet.png"/&gt;&lt;/p&gt;
 &lt;h1 id="Evaluating-Algorithm-Performance"&gt;Evaluating Algorithm Performance&lt;a class="anchor-link" href="#Evaluating-Algorithm-Performance"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;h2 id="Confusion-Matrix"&gt;Confusion Matrix&lt;a class="anchor-link" href="#Confusion-Matrix"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;A confusion matrix displays your model's predicted (testing set) outputs against the true observational values.&lt;br/&gt;
 Traditionally, the predicted targets are aligned on the X-axis of the matrix, and the true values are aligned on the Y-axis.&lt;/p&gt;
 &lt;/div&gt;
@@ -3123,7 +3123,7 @@ Traditionally, the predicted targets are aligned on the X-axis of the matrix, an
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;&lt;img alt="title" src="img/confusion table.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="title" src="img/confusion_table.png"/&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
