@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Hackore</title><link href="https://shaynemei.github.io/hackore/" rel="alternate"></link><link href="https://shaynemei.github.io/hackore/feeds/tutorial.atom.xml" rel="self"></link><id>https://shaynemei.github.io/hackore/</id><updated>2018-07-16T21:00:00+08:00</updated><entry><title>How to Publish a Pelican Blog via GitHub</title><link href="https://shaynemei.github.io/hackore/how_to_pelican.html" rel="alternate"></link><published>2018-07-16T21:00:00+08:00</published><updated>2018-07-16T21:00:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-07-16:hackore/how_to_pelican.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Hackore</title><link href="https://shaynemei.github.io/hackore/" rel="alternate"></link><link href="https://shaynemei.github.io/hackore/feeds/tutorial.atom.xml" rel="self"></link><id>https://shaynemei.github.io/hackore/</id><updated>2018-08-19T10:20:00+08:00</updated><entry><title>How to properly override equals.() method in Java</title><link href="https://shaynemei.github.io/hackore/how_to_equals.html" rel="alternate"></link><published>2018-08-19T10:20:00+08:00</published><updated>2018-08-19T10:20:00+08:00</updated><author><name>Shayne Mei</name></author><id>tag:shaynemei.github.io,2018-08-19:hackore/how_to_equals.html</id><summary type="html">&lt;p&gt;When creating my first Java class, I was trying to override the &lt;code&gt;equals()&lt;/code&gt; method the way I created other methods in my own class. I passed in an &lt;code&gt;other&lt;/code&gt; object of my class and compared it with some normal &lt;code&gt;if&lt;/code&gt; statements. It failed.&lt;/p&gt;
+&lt;p&gt;It turns out there are specific rules to follow when overriding a Java method.&lt;/p&gt;
+&lt;p&gt;In the case of &lt;code&gt;equals()&lt;/code&gt;, the most important thing is that &lt;strong&gt;it must take an &lt;code&gt;Object obj&lt;/code&gt; (an instance of the Java Object class) as parameter&lt;/strong&gt; instead of a &lt;code&gt;MyClass other&lt;/code&gt;. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="nf"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It's good practise to first check if &lt;code&gt;obj&lt;/code&gt; is null.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="nf"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then check if this object is an instance of MyClass. (You can also use the &lt;code&gt;instanceof&lt;/code&gt; operator)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="nf"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(!&lt;/span&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;isAssignableFrom&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;()))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, if it passes the checks, cast it into &lt;code&gt;MyClass&lt;/code&gt; with a &lt;code&gt;final&lt;/code&gt; statement and you can carry on with the checks you with to perform.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="nf"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+    &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="java"></category><category term="method"></category></entry><entry><title>How to Publish a Pelican Blog via GitHub</title><link href="https://shaynemei.github.io/hackore/how_to_pelican.html" rel="alternate"></link><published>2018-07-16T21:00:00+08:00</published><updated>2018-07-16T21:00:00+08:00</updated><author><name>Shayne</name></author><id>tag:shaynemei.github.io,2018-07-16:hackore/how_to_pelican.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
